@@ -7,6 +7,7 @@ dotenv.config({
 
 const settings = {
   port: env.get('PORT').default(42069).asIntPositive(),
+  postgresUrl: env.get('POSTGRES_URL').required().asString(),
 };
 
 export default settings;
