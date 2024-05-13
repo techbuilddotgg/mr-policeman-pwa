@@ -13,7 +13,7 @@ export const radars = pgTable('radars', {
 });
 
 export const users = pgTable('users', {
-  id: uuid('id').primaryKey(),
+  id: uuid('id').primaryKey().defaultRandom(),
   username: varchar('username').notNull(),
   email: varchar('email').notNull(),
 });
