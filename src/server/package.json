@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/main.js",
-    "dev": "NODE_ENV=development && nodemon src/main.ts"
+    "dev": "nodemon src/main.ts"
   },
   "author": "",
   "license": "ISC",
