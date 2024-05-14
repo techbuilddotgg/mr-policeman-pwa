@@ -22,4 +22,8 @@ export class UserService {
     const user = await db.select().from(users).where(eq(users.email, email));
     return user[0];
   }
+
+  async deleteUser(email: string) {
+    await db.delete(users).where(eq(users.email, email)).execute();
+  }
 }

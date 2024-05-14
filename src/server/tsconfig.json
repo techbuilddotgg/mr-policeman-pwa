@@ -6,13 +6,17 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "typeRoots": [
+      "./@types"
+    ]
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "@types/index.d.ts"
   ],
   "exclude": [
     "node_modules",
     "dist"
-  ]
+  ],
 }

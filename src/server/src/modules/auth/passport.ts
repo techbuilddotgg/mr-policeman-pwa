@@ -8,8 +8,10 @@ import settings from '../../common/settings/settings';
 import { GoogleProfile } from './passport.types';
 import { createSessionUser } from './createSessionUser';
 import { UserService } from '../../services/user.service';
+import { SettingsService } from '../../services/settings.service';
 
 const userService = new UserService();
+const settingsService = new SettingsService();
 
 passport.use(
   new GoogleStrategy(
@@ -20,9 +22,9 @@ passport.use(
       passReqToCallback: true,
     },
     async function (
-      req: Request,
+      _req: Request,
       accessToken: string,
-      refreshToken: string,
+      _refreshToken: string,
       profile: GoogleProfile,
       done: VerifyCallback
     ) {
@@ -30,6 +32,7 @@ passport.use(
 
       if (!isExistingUser) {
         await userService.createUser(profile.displayName, profile.email);
+        await settingsService.createNotificationSettings(profile.email);
       }
 
       return done(null, createSessionUser(accessToken, profile));
