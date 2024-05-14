@@ -47,12 +47,12 @@ export class RadarRouter extends ModuleRouter {
      *                 id:
      *                   type: string
      *                   format: uuid
-     *                 name:
-     *                   type: string
-     *                 location:
-     *                   type: string
-     *                 status:
-     *                   type: string
+     *                 latitude:
+     *                   type: integer
+     *                 longitude:
+     *                   type: integer
+     *                 speedLimit:
+     *                   type: integer
      *       400:
      *         description: Invalid ID format
      *       404:
@@ -83,12 +83,12 @@ export class RadarRouter extends ModuleRouter {
      *                   id:
      *                     type: string
      *                     format: uuid
-     *                   name:
-     *                     type: string
-     *                   location:
-     *                     type: string
-     *                   status:
-     *                     type: string
+     *                   latitude:
+     *                     type: integer
+     *                   longitude:
+     *                     type: integer
+     *                   speedLimit:
+     *                     type: integer
      */
     this.router.get('/', this.controller.getRadars.bind(this.controller));
 
