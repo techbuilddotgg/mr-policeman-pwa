@@ -6,3 +6,9 @@ export const idSchema = z.object({
     id: uuidValidator,
   }),
 });
+
+export const userIdSchema = z.object({
+  params: z.object({
+    userId: uuidValidator,
+  }),
+});

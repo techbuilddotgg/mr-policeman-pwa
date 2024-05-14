@@ -1,4 +1,11 @@
-import { pgTable, uuid, integer, varchar, boolean } from 'drizzle-orm/pg-core';
+import {
+  pgTable,
+  uuid,
+  integer,
+  varchar,
+  boolean,
+  timestamp,
+} from 'drizzle-orm/pg-core';
 
 export const radars = pgTable('radars', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -30,5 +37,5 @@ export const contributions = pgTable('contributions', {
   latitude: integer('latitude').notNull(),
   longitude: integer('longitude').notNull(),
   description: varchar('description').notNull(),
-  createdAt: integer('created_at').notNull(),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
 });
