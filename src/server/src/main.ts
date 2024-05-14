@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Router } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import settings from './common/settings/settings';
@@ -6,7 +6,8 @@ import session from 'express-session';
 import passport from 'passport';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
-import './common/auth/passport';
+import routes from './router';
+import './modules/auth/passport';
 
 dotenv.config();
 
@@ -27,7 +28,7 @@ const options = {
       },
     ],
   },
-  apis: ['src/main.ts'],
+  apis: ['src/modules/**/*.router.ts'],
 };
 
 const specs = swaggerJsdoc(options);
@@ -36,6 +37,7 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use(
   cors({
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -50,28 +52,18 @@ app.use(
     saveUninitialized: true,
   })
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-/**
- * @swagger
- * /:
- *   get:
- *     summary: Returns a hello message
- *     tags: [Hello]
- *     responses:
- *       200:
- *         description: Hello World message
- *         content:
- *           text/plain:
- *             schema:
- *               type: string
- *               example: Hello World
- */
+const apiRouter = Router();
+routes.appRouter(apiRouter);
+app.use('/', apiRouter);
+
 app.get('/', (req, res) => {
-  res.send('Hello World');
+  res.redirect('/docs');
 });
 
 app.listen(settings.port, () => {
-  console.log(`Server is running on port ${settings.port}`);
+  console.log(`Server is running on port http://localhost:${settings.port}`);
 });

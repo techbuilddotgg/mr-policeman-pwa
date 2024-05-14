@@ -4,7 +4,7 @@ import {
   Strategy as GoogleStrategy,
   VerifyCallback,
 } from 'passport-google-oauth2';
-import settings from '../settings/settings';
+import settings from '../../common/settings/settings';
 import { GoogleProfile } from './passport.types';
 import { createSessionUser } from './createSessionUser';
 import { UserService } from '../../services/user.service';

@@ -1,14 +1,7 @@
-import {
-  pgTable,
-  uuid,
-  pgEnum,
-  integer,
-  varchar,
-  boolean,
-} from 'drizzle-orm/pg-core';
+import { pgTable, uuid, integer, varchar, boolean } from 'drizzle-orm/pg-core';
 
 export const radars = pgTable('radars', {
-  id: uuid('id').primaryKey(),
+  id: uuid('id').primaryKey().defaultRandom(),
   speedLimit: integer('speed_limit').notNull(),
 });
 
@@ -19,7 +12,7 @@ export const users = pgTable('users', {
 });
 
 export const notificationSettings = pgTable('notification_settings', {
-  id: uuid('id').primaryKey(),
+  id: uuid('id').primaryKey().defaultRandom(),
   userId: uuid('user_id')
     .notNull()
     .references(() => users.id),
@@ -27,7 +20,7 @@ export const notificationSettings = pgTable('notification_settings', {
 });
 
 export const contributions = pgTable('contributions', {
-  id: uuid('id').primaryKey(),
+  id: uuid('id').primaryKey().defaultRandom(),
   userId: uuid('user_id')
     .notNull()
     .references(() => users.id),
