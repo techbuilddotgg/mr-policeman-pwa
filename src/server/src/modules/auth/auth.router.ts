@@ -3,6 +3,7 @@ import passport from 'passport';
 import { AuthController } from './auth.controller';
 import { ModuleRouter } from '../../common/router/module-router.class';
 import isAuthenticated from '../../common/middlewares/authentication.middleware';
+import settings from "../../common/settings/settings";
 
 export class AuthRouter extends ModuleRouter {
   public readonly prefix = '/auth';
@@ -51,8 +52,8 @@ export class AuthRouter extends ModuleRouter {
     this.router.get(
       '/google/callback',
       passport.authenticate('google', {
-        successRedirect: '/auth/session',
-        failureRedirect: '/auth/failure',
+        successReturnToOrRedirect: settings.clientUrl,
+        failureRedirect: `${settings.clientUrl}/login`,
       })
     );
 

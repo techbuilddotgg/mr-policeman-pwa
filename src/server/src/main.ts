@@ -8,6 +8,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import routes from './router';
 import './modules/auth/passport';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -36,12 +37,14 @@ const specs = swaggerJsdoc(options);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
     allowedHeaders: ['Content-Type', 'Authorization'],
-    origin: '*',
+    credentials: true,
+    origin: settings.clientUrl,
   })
 );
 

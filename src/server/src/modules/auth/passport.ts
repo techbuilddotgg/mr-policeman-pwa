@@ -28,6 +28,7 @@ passport.use(
       profile: GoogleProfile,
       done: VerifyCallback
     ) {
+        console.log('token', accessToken)
       const isExistingUser = await userService.doesUserExist(profile.email);
 
       if (!isExistingUser) {

@@ -12,6 +12,7 @@ const settings = {
   googleClientId: env.get('GOOGLE_CLIENT_ID').required().asString(),
   googleClientSecret: env.get('GOOGLE_CLIENT_SECRET').required().asString(),
   googleCallbackUrl: env.get('GOOGLE_CALLBACK_URL').required().asString(),
+  clientUrl: env.get('CLIENT_URL').required().asString(),
 };
 
 export default settings;
