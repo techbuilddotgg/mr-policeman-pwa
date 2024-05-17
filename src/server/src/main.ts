@@ -30,6 +30,20 @@ const options = {
         url: `http://localhost:${settings.port}`,
       },
     ],
+    components: {
+      securitySchemes: {
+          bearerAuth: {
+              type: 'http',
+              scheme: 'bearer',
+              bearerFormat: 'JWT',
+          },
+      },
+    },
+    security: [
+      {
+          bearerAuth: [],
+      },
+    ],
   },
   apis: ['src/modules/**/*.router.ts'],
 };

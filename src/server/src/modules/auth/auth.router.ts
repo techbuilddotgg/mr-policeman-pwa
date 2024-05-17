@@ -90,8 +90,100 @@ export class AuthRouter extends ModuleRouter {
      */
     this.router.get('/profile', passport.authenticate('jwt', {session: false}), this.controller.getProfile);
 
+    /**
+     * @swagger
+     * /auth/sign-in:
+     *   post:
+     *     summary: User sign-in
+     *     description: Authenticates a user using username and password
+     *     tags: [Auth]
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               username:
+     *                 type: string
+     *                 example: user@example.com
+     *               password:
+     *                 type: string
+     *                 example: password
+     *             required:
+     *               - username
+     *               - password
+     *     responses:
+     *       200:
+     *         description: Successful authentication
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 accessToken:
+     *                   type: string
+     *                   description: JWT access token
+     *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+     *       401:
+     *         description: Authentication failed
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: string
+     *                   example: Authentication failed
+     */
     this.router.post('/sign-in',passport.authenticate('local', {session: false} ), this.controller.login);
 
+    /**
+     * @swagger
+     * /auth/sign-up:
+     *   post:
+     *     summary: User sign-up
+     *     description: Registers a new user with username and password
+     *     tags: [Auth]
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               username:
+     *                 type: string
+     *                 example: newuser@example.com
+     *               password:
+     *                 type: string
+     *                 example: password
+     *             required:
+     *               - username
+     *               - password
+     *     responses:
+     *       200:
+     *         description: Successful registration
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 accessToken:
+     *                   type: string
+     *                   description: JWT access token
+     *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+     *       401:
+     *         description: Registration failed
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: string
+     *                   example: Registration failed
+     */
     this.router.post(
         '/sign-up',
         passport.authenticate('signup', { session: false }),
