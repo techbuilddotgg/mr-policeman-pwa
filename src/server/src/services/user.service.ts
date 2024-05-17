@@ -10,10 +10,10 @@ export class UserService {
     return !!user;
   }
 
-  async createUser(username: string, email: string) {
+  async createUser(username: string, email: string, password?: string) {
     const user = await db
       .insert(users)
-      .values({ username: username, email: email })
+      .values({ username: username, email: email, password: password })
       .returning();
     return user[0];
   }

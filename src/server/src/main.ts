@@ -7,7 +7,9 @@ import passport from 'passport';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import routes from './router';
-import './modules/auth/passport';
+import './modules/auth/passport-local';
+import './modules/auth/passport-google';
+import './modules/auth/passport-jwt';
 import cookieParser from 'cookie-parser';
 
 dotenv.config();
@@ -42,7 +44,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin'],
     credentials: true,
     origin: settings.clientUrl,
   })

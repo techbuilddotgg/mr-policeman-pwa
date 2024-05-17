@@ -4,6 +4,7 @@ import { AuthController } from './auth.controller';
 import { ModuleRouter } from '../../common/router/module-router.class';
 import isAuthenticated from '../../common/middlewares/authentication.middleware';
 import settings from "../../common/settings/settings";
+import {User} from "../users/types/user-type";
 
 export class AuthRouter extends ModuleRouter {
   public readonly prefix = '/auth';
@@ -52,9 +53,9 @@ export class AuthRouter extends ModuleRouter {
     this.router.get(
       '/google/callback',
       passport.authenticate('google', {
-        successReturnToOrRedirect: settings.clientUrl,
         failureRedirect: `${settings.clientUrl}/login`,
-      })
+      }), this.controller.googleCallback
+
     );
 
     /**
@@ -71,13 +72,13 @@ export class AuthRouter extends ModuleRouter {
 
     /**
      * @swagger
-     * /auth/session:
+     * /auth/profile:
      *   get:
-     *     summary: Get user session information
+     *     summary: Get user profile information
      *     tags: [Auth]
      *     responses:
      *       200:
-     *         description: Return the authenticated user's session information
+     *         description: Return the authenticated user's profile information
      *         content:
      *           application/json:
      *             schema:
@@ -85,9 +86,18 @@ export class AuthRouter extends ModuleRouter {
      *               properties:
      *                 user:
      *                   type: object
-     *                   description: Authenticated user's information
+     *                   description: Authenticated user's profile information
      */
-    this.router.get('/session', isAuthenticated, this.controller.getSession);
+    this.router.get('/profile', passport.authenticate('jwt', {session: false}), this.controller.getProfile);
+
+    this.router.post('/sign-in',passport.authenticate('local', {session: false} ), this.controller.login);
+
+    this.router.post(
+        '/sign-up',
+        passport.authenticate('signup', { session: false }),
+        this.controller.signup
+    );
+
 
     return this.router;
   }

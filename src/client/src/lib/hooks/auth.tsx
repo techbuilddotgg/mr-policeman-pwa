@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { KEYS } from '@/lib/api/keys';
-import { getSession } from '@/lib/api/auth-service';
+import { getProfile } from '@/lib/api/auth-service';
 
-export const useSession = () =>
+export const useProfile = () =>
   useQuery({
     queryKey: [KEYS.AUTH, KEYS.SESSION, KEYS.GET],
-    queryFn: getSession,
+    queryFn: getProfile,
     retry: false,
   });
