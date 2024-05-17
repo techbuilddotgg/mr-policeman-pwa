@@ -3,8 +3,9 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { ReactNode } from 'react';
 import QueryClientProvider from '@/components/providers/query-client-provider';
-
+import '@radix-ui/themes/styles.css';
 const inter = Inter({ subsets: ['latin'] });
+import { Theme } from '@radix-ui/themes';
 
 export const metadata: Metadata = {
   title: 'MR Policeman',
@@ -28,7 +29,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <QueryClientProvider>{children}</QueryClientProvider>
+        <Theme>
+          <QueryClientProvider>{children}</QueryClientProvider>
+        </Theme>
       </body>
     </html>
   );
