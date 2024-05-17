@@ -6,7 +6,7 @@ import ContributionForm from "@/components/ui/contribution-form";
 
 export default function ArticlesPage() {
   return (
-      <Container size="1" className="mx-24 my-12 relative" align="left">
+      <Container size="1" className="mx-24 my-12" align="left">
           <Badge color="blue" className="mb-2">Ne spreglej</Badge>
           <Heading className="mb-4">Koristne povezave</Heading>
           <Flex gap="1" direction="column" className="mb-12">
@@ -23,7 +23,7 @@ export default function ArticlesPage() {
 
           <Dialog.Root>
               <Dialog.Trigger>
-                <IconButton radius="full" className="absolute right-5 bottom-5 hover:cursor-pointer" size="4">
+                <IconButton radius="full" className="fixed right-14 bottom-14 hover:cursor-pointer f" size="4">
                     <PlusIcon />
                 </IconButton>
               </Dialog.Trigger>
