@@ -14,14 +14,11 @@ const ContributionCard: React.FC<ContributionCardProps> = ({ name, date, contrib
                 <Flex gap="4" align="center">
                     <Avatar size="5" radius="full" fallback={name ? name.charAt(0).toUpperCase() : "GS"} color="indigo" />
                     <Box>
-                        <Text as="div" size="4" color="gray" weight="light">
-                            {date}
-                        </Text>
-                        <Text as="div" size="4" weight="bold" >
-                            {name}
-                        </Text>
-                        <Text as="div" size="4" color="gray">
+                        <Text as="div" size="4" weight="bold" color="gray" className="mb-2">
                             {contribution}
+                        </Text>
+                        <Text as="div" size="3" color="gray" weight="light">
+                            {name}, {date}
                         </Text>
                     </Box>
                 </Flex>

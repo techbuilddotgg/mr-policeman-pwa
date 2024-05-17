@@ -7,8 +7,8 @@ import ContributionForm from "@/components/ui/contribution-form";
 export default function ArticlesPage() {
   return (
       <Container size="1" className="mx-24 my-12 relative" align="left">
-          <Heading className="mb-1">Koristne povezave</Heading>
-          <Badge color="blue" className="mb-4">Ne spreglej</Badge>
+          <Badge color="blue" className="mb-2">Ne spreglej</Badge>
+          <Heading className="mb-4">Koristne povezave</Heading>
           <Flex gap="1" direction="column" className="mb-12">
             <LinkCard name={"Da neboš živčn"} link={"https://www.youtube.com/watch?v=r79ul2vhzpU"} />
             <LinkCard name={"Da neboš živčn"} link={"https://www.youtube.com/watch?v=r79ul2vhzpU"} />
