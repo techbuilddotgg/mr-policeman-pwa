@@ -2,10 +2,9 @@ import { ModuleRouter } from '../../common/router/module-router.class';
 import { Router } from 'express';
 import { ContributionsController } from './contributions.controller';
 import { ContributionsService } from '../../services/contributions.service';
-import isAuthenticated from '../../common/middlewares/authentication.middleware';
 import validate from '../../common/middlewares/validation.middleware';
 import { idSchema } from '../../common/validators/common.validators';
-import { createContributionSchema } from './create-contributions.schema';
+import passport from "passport";
 
 export class ContributionsRouter extends ModuleRouter {
   public readonly prefix = '/contributions';
@@ -27,6 +26,19 @@ export class ContributionsRouter extends ModuleRouter {
      *       required: true
      *       content:
      *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               userId:
+     *                 type: string
+     *                 format: uuid
+     *                 description: The ID of the user making the contribution
+     *               text:
+     *                 type: string
+     *                 description: The description of the contribution
+     *             required:
+     *               - userId
+     *               - text
      *     responses:
      *       201:
      *         description: Contribution created successfully
@@ -35,9 +47,8 @@ export class ContributionsRouter extends ModuleRouter {
      */
     this.router.post(
       '/',
-      isAuthenticated,
-      validate(createContributionSchema),
-      this.controller.createContribution.bind(this.controller)
+        passport.authenticate('jwt'),
+        this.controller.createContribution.bind(this.controller)
     );
 
     /**
@@ -54,7 +65,7 @@ export class ContributionsRouter extends ModuleRouter {
      */
     this.router.get(
       '/',
-      isAuthenticated,
+        passport.authenticate('jwt'),
       this.controller.getContributions.bind(this.controller)
     );
 
@@ -82,8 +93,8 @@ export class ContributionsRouter extends ModuleRouter {
      */
     this.router.get(
       '/:id',
-      isAuthenticated,
-      validate(idSchema),
+        passport.authenticate('jwt'),
+        validate(idSchema),
       this.controller.getContributionById.bind(this.controller)
     );
 
@@ -108,8 +119,8 @@ export class ContributionsRouter extends ModuleRouter {
      */
     this.router.delete(
       '/:id',
-      isAuthenticated,
-      validate(idSchema),
+        passport.authenticate('jwt'),
+        validate(idSchema),
       this.controller.deleteContribution.bind(this.controller)
     );
 

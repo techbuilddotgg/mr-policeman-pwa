@@ -35,8 +35,6 @@ export const contributions = pgTable('contributions', {
   userId: uuid('user_id')
     .notNull()
     .references(() => users.id),
-  latitude: integer('latitude').notNull(),
-  longitude: integer('longitude').notNull(),
-  description: varchar('description').notNull(),
+  text: varchar('description').notNull(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
