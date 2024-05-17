@@ -28,10 +28,8 @@ export class AuthRouter extends ModuleRouter {
      * /auth/google:
      *   get:
      *     summary: Authenticate with Google
+     *     description: IMPORTANT! For Google authentication to work, you will have to manually go to /auth/google in url bar. If login will be successful, you will be redirected back to /docs page with Bearer Token in header.
      *     tags: [Auth]
-     *     responses:
-     *       302:
-     *         description: Redirect to Google for authentication
      */
     this.router.get(
       '/google',

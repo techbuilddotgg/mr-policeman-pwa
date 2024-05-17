@@ -1,4 +1,4 @@
-import express, { Router } from 'express';
+import express, {Router, Request, Response, NextFunction} from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import settings from './common/settings/settings';
@@ -36,6 +36,7 @@ const options = {
               type: 'http',
               scheme: 'bearer',
               bearerFormat: 'JWT',
+              value: 'Bearer sjdfhjdghkdfj',
           },
       },
     },
@@ -50,19 +51,38 @@ const options = {
 
 const specs = swaggerJsdoc(options);
 
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs));
-
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(
-  cors({
-    allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin'],
-    credentials: true,
-    origin: settings.clientUrl,
-  })
+    cors({
+        allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin'],
+        credentials: true,
+        origin: settings.clientUrl,
+    })
 );
+
+app.use('/docs',  swaggerUi.serve, (req: Request, res: Response, next: NextFunction) => {
+    const swaggerOptions = {
+        swaggerOptions: {
+            authAction: {
+                bearerAuth: {
+                    name: 'bearerAuth',
+                    schema: {
+                        type: 'http',
+                        in: 'header',
+                        name: 'Authorization',
+                        scheme: 'bearer',
+                        bearerFormat: 'JWT',
+                    },
+                    value: req?.cookies?.access_token,
+                },
+            },
+        },
+    };
+    swaggerUi.setup(specs, swaggerOptions)(req, res, next);
+});
 
 app.use(
   session({
