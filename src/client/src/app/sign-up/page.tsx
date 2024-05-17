@@ -5,11 +5,11 @@ import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { useSignIn } from '@/lib/hooks/auth';
+import { useSignUp } from '@/lib/hooks/auth';
 import GoogleSignInButton from '@/components/ui/google-sign-in-button';
 import { Credentials } from '@/lib/types/auth-types';
 
-export default function SignInPage() {
+export default function SignUpPage() {
   const router = useRouter();
   const { handleSubmit, register } = useForm<Credentials>({
     defaultValues: {
@@ -17,7 +17,7 @@ export default function SignInPage() {
       password: '',
     },
   });
-  const { mutateAsync } = useSignIn({
+  const { mutateAsync } = useSignUp({
     onSuccess: () => router.replace('/map'),
   });
 
@@ -27,10 +27,8 @@ export default function SignInPage() {
   return (
     <div className="mx-auto flex h-dvh w-full flex-col items-center justify-center space-y-6 sm:w-[350px]">
       <div className="flex flex-col space-y-2 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">Sign in to your account</h1>
-        <p className="text-sm text-muted-foreground">
-          Enter your credentials to sign in to your account
-        </p>
+        <h1 className="text-2xl font-semibold tracking-tight">Create an account</h1>
+        <p className="text-sm text-muted-foreground">Enter credentials to create new account</p>
       </div>
       <div className="grid w-full gap-6">
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -58,7 +56,7 @@ export default function SignInPage() {
                 autoCorrect="off"
               />
             </div>
-            <Button>Sign In with Email</Button>
+            <Button>Sign Up with Email</Button>
           </div>
         </form>
         <div className="relative">
@@ -70,8 +68,8 @@ export default function SignInPage() {
           </div>
         </div>
         <div className="flex w-full flex-col gap-2">
-          <Button variant="outline" type="button" onClick={() => router.push(`/sign-up`)}>
-            <p className="ml-2">Sign Up with Credentials</p>
+          <Button variant="outline" type="button" onClick={() => router.push(`/sign-in`)}>
+            <p className="ml-2">Sign in with Credentials</p>
           </Button>
           <GoogleSignInButton />
         </div>
