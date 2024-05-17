@@ -9,6 +9,7 @@ interface AuthProviderProps {
 
 export default function AuthProvider({ children }: AuthProviderProps) {
   const { data: session, isLoading } = useSession();
+  console.log('session', session);
 
   if (isLoading) {
     return <div>Loading...</div>;

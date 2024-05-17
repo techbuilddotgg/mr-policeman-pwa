@@ -11,6 +11,11 @@ export class AuthController {
     res.status(401).json({ message: 'Authentication failed' });
   }
 
+  public googleCallback(req: Request, res: Response, _next: NextFunction) {
+    res.cookie('access_token', AuthController.createToken(req.user as User), { httpOnly: false, secure: true, sameSite: 'none' })
+    return res.redirect(`${settings.clientUrl}`);
+  }
+
   public async getProfile(req: Request, res: Response, _next: NextFunction) {
     res.status(200).json({ user: UserResponseDto.fromUser(req.user as User) });
   }
@@ -33,7 +38,7 @@ export class AuthController {
     return res.json({ accessToken: token });
   }
 
-  private static createToken(user: User) {
+  public static createToken(user: User) {
     const tokenBody = UserResponseDto.fromUser(user);
     return jwt.sign({user: tokenBody}, settings.jwtSecret, {
       expiresIn: '1h',

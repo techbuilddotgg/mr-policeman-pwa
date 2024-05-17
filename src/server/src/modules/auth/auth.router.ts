@@ -4,6 +4,7 @@ import { AuthController } from './auth.controller';
 import { ModuleRouter } from '../../common/router/module-router.class';
 import isAuthenticated from '../../common/middlewares/authentication.middleware';
 import settings from "../../common/settings/settings";
+import {User} from "../users/types/user-type";
 
 export class AuthRouter extends ModuleRouter {
   public readonly prefix = '/auth';
@@ -52,9 +53,9 @@ export class AuthRouter extends ModuleRouter {
     this.router.get(
       '/google/callback',
       passport.authenticate('google', {
-        successReturnToOrRedirect: settings.clientUrl,
         failureRedirect: `${settings.clientUrl}/login`,
-      })
+      }), this.controller.googleCallback
+
     );
 
     /**
@@ -87,7 +88,7 @@ export class AuthRouter extends ModuleRouter {
      *                   type: object
      *                   description: Authenticated user's profile information
      */
-    this.router.get('/profile', passport.authenticate('google', {session: false}), this.controller.getProfile);
+    this.router.get('/profile', passport.authenticate('jwt', {session: false}), this.controller.getProfile);
 
     this.router.post('/sign-in',passport.authenticate('local', {session: false} ), this.controller.login);
 
@@ -97,9 +98,6 @@ export class AuthRouter extends ModuleRouter {
         this.controller.signup
     );
 
-    this.router.get('/test', passport.authenticate('jwt', { session: false }), (req, res) => {
-        res.json({ message: 'Success!' });
-    })
 
     return this.router;
   }
