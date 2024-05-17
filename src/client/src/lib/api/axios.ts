@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { env } from '@/env.mjs';
-import { getCookie } from '@/lib/utils';
+import { getCookie, isServer } from '@/lib/utils';
 
 export const api = axios.create({
   baseURL: env.NEXT_PUBLIC_BACKEND_URL,
@@ -10,7 +10,15 @@ export const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const token = getCookie('access_token');
+  let token: string | undefined = '';
+
+  if (isServer()) {
+    const { cookies } = require('next/headers');
+    token = cookies().get('access_token')?.value;
+  } else {
+    token = getCookie('access_token');
+  }
+
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

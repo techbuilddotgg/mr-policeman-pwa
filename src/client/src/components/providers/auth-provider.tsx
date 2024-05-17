@@ -1,20 +1,20 @@
-'use client';
 import { ReactNode } from 'react';
 import { redirect } from 'next/navigation';
-import { useSession } from '@/lib/hooks/auth';
+import { getProfile } from '@/lib/api/auth-service';
 
 interface AuthProviderProps {
   children: ReactNode;
 }
 
-export default function AuthProvider({ children }: AuthProviderProps) {
-  const { data: session, isLoading } = useSession();
-  console.log('session', session);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
+export default async function AuthProvider({ children }: AuthProviderProps) {
+  let profile;
+  try {
+    profile = await getProfile();
+  } catch (error) {
+    return redirect('/login');
   }
-  if (!session?.user) {
+
+  if (!profile?.user) {
     return redirect('/login');
   }
   return <>{children}</>;

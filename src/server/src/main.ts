@@ -7,7 +7,9 @@ import passport from 'passport';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import routes from './router';
-import './modules/auth/passport';
+import './modules/auth/passport-local';
+import './modules/auth/passport-google';
+import './modules/auth/passport-jwt';
 import cookieParser from 'cookie-parser';
 
 dotenv.config();
