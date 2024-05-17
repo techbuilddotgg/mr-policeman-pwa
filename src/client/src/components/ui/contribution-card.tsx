@@ -9,7 +9,7 @@ interface ContributionCardProps {
 
 const ContributionCard: React.FC<ContributionCardProps> = ({ name, date, contribution }) => {
     return (
-        <Box width="500px">
+        <Box width="60vw">
             <Card size="3">
                 <Flex gap="4" align="center">
                     <Avatar size="5" radius="full" fallback={name ? name.charAt(0).toUpperCase() : "GS"} color="indigo" />
