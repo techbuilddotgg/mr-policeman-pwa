@@ -13,6 +13,7 @@ const settings = {
   googleClientSecret: env.get('GOOGLE_CLIENT_SECRET').required().asString(),
   googleCallbackUrl: env.get('GOOGLE_CALLBACK_URL').required().asString(),
   clientUrl: env.get('CLIENT_URL').required().asString(),
+  jwtSecret: env.get('JWT_SECRET').required().asString(),
 };
 
 export default settings;

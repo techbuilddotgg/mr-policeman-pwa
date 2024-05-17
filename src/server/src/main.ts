@@ -42,7 +42,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin'],
     credentials: true,
     origin: settings.clientUrl,
   })

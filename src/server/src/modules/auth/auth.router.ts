@@ -71,13 +71,13 @@ export class AuthRouter extends ModuleRouter {
 
     /**
      * @swagger
-     * /auth/session:
+     * /auth/profile:
      *   get:
-     *     summary: Get user session information
+     *     summary: Get user profile information
      *     tags: [Auth]
      *     responses:
      *       200:
-     *         description: Return the authenticated user's session information
+     *         description: Return the authenticated user's profile information
      *         content:
      *           application/json:
      *             schema:
@@ -85,9 +85,21 @@ export class AuthRouter extends ModuleRouter {
      *               properties:
      *                 user:
      *                   type: object
-     *                   description: Authenticated user's information
+     *                   description: Authenticated user's profile information
      */
-    this.router.get('/session', isAuthenticated, this.controller.getSession);
+    this.router.get('/profile', passport.authenticate('google', {session: false}), this.controller.getProfile);
+
+    this.router.post('/sign-in',passport.authenticate('local', {session: false} ), this.controller.login);
+
+    this.router.post(
+        '/sign-up',
+        passport.authenticate('signup', { session: false }),
+        this.controller.signup
+    );
+
+    this.router.get('/test', passport.authenticate('jwt', { session: false }), (req, res) => {
+        res.json({ message: 'Success!' });
+    })
 
     return this.router;
   }

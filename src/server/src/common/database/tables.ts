@@ -18,6 +18,7 @@ export const users = pgTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
   username: varchar('username').notNull(),
   email: varchar('email').notNull().unique(),
+  password: varchar('password'),
 });
 
 export const notificationSettings = pgTable('notification_settings', {
