@@ -11,11 +11,11 @@ export default async function AuthProvider({ children }: AuthProviderProps) {
   try {
     profile = await getProfile();
   } catch (error) {
-    return redirect('/login');
+    return redirect('/sign-in');
   }
 
   if (!profile?.user) {
-    return redirect('/login');
+    return redirect('/sign-in');
   }
   return <>{children}</>;
 }

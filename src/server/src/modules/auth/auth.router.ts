@@ -53,7 +53,7 @@ export class AuthRouter extends ModuleRouter {
     this.router.get(
       '/google/callback',
       passport.authenticate('google', {
-        failureRedirect: `${settings.clientUrl}/login`,
+        failureRedirect: `${settings.clientUrl}/sign-in`,
       }), this.controller.googleCallback
 
     );
