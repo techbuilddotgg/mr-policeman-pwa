@@ -28,7 +28,7 @@ export class AuthRouter extends ModuleRouter {
      * /auth/google:
      *   get:
      *     summary: Authenticate with Google
-     *     description: IMPORTANT! For Google authentication to work, you will have to manually go to /auth/google in url bar. If login will be successful, you will be redirected back to /docs page with Bearer Token in header.
+     *     description: IMPORTANT! For Google authentication to work, you will have to manually go to <a href="/auth/google">/auth/google</a> in url bar. If login will be successful, you will be redirected back to /docs page with Bearer Token in header. You can try successful login by executing /auth/profile request in Swagger UI.
      *     tags: [Auth]
      */
     this.router.get(

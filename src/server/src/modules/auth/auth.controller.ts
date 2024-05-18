@@ -13,7 +13,10 @@ export class AuthController {
 
   public googleCallback(req: Request, res: Response, _next: NextFunction) {
     res.cookie('access_token', AuthController.createToken(req.user as User), { httpOnly: false, secure: true, sameSite: 'none' })
-    return res.redirect(`${settings.clientUrl}`);
+
+    // Redirect to the swagger docs if the referer is not set
+    const referer = req.get('Referer');
+    return res.redirect(referer ? settings.clientUrl : '/');
   }
 
   public async getProfile(req: Request, res: Response, _next: NextFunction) {
