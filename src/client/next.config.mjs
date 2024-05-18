@@ -7,6 +7,9 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV !== 'development',
   },
+  experimental: {
+    typedRoutes: true,
+  },
   async redirects() {
     return [
       {

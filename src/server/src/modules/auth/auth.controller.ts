@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import {UserResponseDto} from "../users/dto/user-response.dto";
-import {User} from "../users/types/user-type";
+import {UserResponseDto} from "../users/dto/user-response-dto";
+import {User} from "../users/user";
 import jwt from "jsonwebtoken";
 import settings from "../../common/settings/settings";
 
@@ -19,10 +19,6 @@ export class AuthController {
     return res.redirect(referer ? settings.clientUrl : '/');
   }
 
-  public async getProfile(req: Request, res: Response, _next: NextFunction) {
-    res.status(200).json({ user: UserResponseDto.fromUser(req.user as User) });
-  }
-
   public async login(req: Request, res: Response, _next: NextFunction) {
     if(!req.user) {
       return res.status(401).json({ message: 'Authentication failed' });
@@ -39,6 +35,13 @@ export class AuthController {
     const token = AuthController.createToken(req.user as User);
 
     return res.json({ accessToken: token });
+  }
+
+  public async session(req: Request, res: Response, _next: NextFunction) {
+    if(!req.user) {
+      return res.status(401).json({ message: 'Authentication failed' });
+    }
+    return res.json({ message: 'Authentication successful' });
   }
 
   public static createToken(user: User) {
