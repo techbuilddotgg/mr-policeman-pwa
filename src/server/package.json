@@ -8,6 +8,7 @@
     "start": "node dist/main.js",
     "dev": "nodemon src/main.ts",
     "generate": "drizzle-kit generate",
+    "push": "drizzle-kit push",
     "migrate": "drizzle-kit migrate",
     "studio": "drizzle-kit studio"
   },
