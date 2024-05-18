@@ -9,8 +9,8 @@ const appRouter = (app: Router): void => {
   new AuthRouter(app).use();
   new RadarRouter(app).use();
   new SettingsRouter(app).use();
-  new UsersRouter(app).use();
   new ContributionsRouter(app).use();
+  new UsersRouter(app).use();
 };
 
 export default { appRouter };

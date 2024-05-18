@@ -1,5 +1,5 @@
 import {users} from "../../../common/database/tables";
-import {User} from "../types/user-type";
+import {User} from "../user";
 
 export class UserResponseDto {
     id: string;

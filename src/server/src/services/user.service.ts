@@ -1,6 +1,7 @@
 import { db } from '../common/database/db';
 import { users } from '../common/database/tables';
 import { eq } from 'drizzle-orm';
+import {UserUpdate} from "../modules/users/user";
 
 export class UserService {
   constructor() {}
@@ -25,5 +26,14 @@ export class UserService {
 
   async deleteUser(email: string) {
     await db.delete(users).where(eq(users.email, email)).execute();
+  }
+
+  async updateUser(id: string, newUserData: UserUpdate) {
+    const updatedUser = await db
+      .update(users)
+      .set({ username: newUserData.username, password: newUserData.password })
+      .where(eq(users.id, id))
+      .returning();
+    return updatedUser[0];
   }
 }

@@ -4,7 +4,7 @@ import { AuthController } from './auth.controller';
 import { ModuleRouter } from '../../common/router/module-router.class';
 import isAuthenticated from '../../common/middlewares/authentication.middleware';
 import settings from "../../common/settings/settings";
-import {User} from "../users/types/user-type";
+import {User} from "../users/user";
 
 export class AuthRouter extends ModuleRouter {
   public readonly prefix = '/auth';
@@ -58,6 +58,23 @@ export class AuthRouter extends ModuleRouter {
 
     /**
      * @swagger
+     * /auth/session:
+     *   get:
+     *     summary: Check authentication status
+     *     tags: [Auth]
+     *     responses:
+     *       200:
+     *         description: Display authentication status
+     *       401:
+     *         description: Authentication failed
+     */
+    this.router.get(
+        '/session',
+        passport.authenticate('jwt', ), this.controller.session
+    )
+
+    /**
+     * @swagger
      * /auth/failure:
      *   get:
      *     summary: Authentication failure route
@@ -67,26 +84,6 @@ export class AuthRouter extends ModuleRouter {
      *         description: Display authentication failure message
      */
     this.router.get('/failure', this.controller.authFailure);
-
-    /**
-     * @swagger
-     * /auth/profile:
-     *   get:
-     *     summary: Get user profile information
-     *     tags: [Auth]
-     *     responses:
-     *       200:
-     *         description: Return the authenticated user's profile information
-     *         content:
-     *           application/json:
-     *             schema:
-     *               type: object
-     *               properties:
-     *                 user:
-     *                   type: object
-     *                   description: Authenticated user's profile information
-     */
-    this.router.get('/profile', passport.authenticate('jwt', {session: false}), this.controller.getProfile);
 
     /**
      * @swagger

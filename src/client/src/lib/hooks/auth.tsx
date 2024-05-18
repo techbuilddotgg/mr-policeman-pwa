@@ -1,14 +1,7 @@
-import { MutationOptions, useMutation, useQuery } from '@tanstack/react-query';
+import { MutationOptions, useMutation } from '@tanstack/react-query';
 import { authKeys } from '@/lib/api/key-factories';
-import { getProfile, signIn, signUp } from '@/lib/api/auth-service';
+import { signIn, signUp } from '@/lib/api/auth-service';
 import { Credentials, TokenResponse } from '@/lib/types/auth-types';
-
-export const useProfile = () =>
-  useQuery({
-    queryKey: authKeys.profile,
-    queryFn: getProfile,
-    retry: false,
-  });
 
 export const useSignIn = (
   options?: Omit<
