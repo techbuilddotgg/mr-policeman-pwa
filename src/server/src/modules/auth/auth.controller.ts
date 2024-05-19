@@ -13,10 +13,12 @@ export class AuthController {
 
   public googleCallback(req: Request, res: Response, _next: NextFunction) {
     res.cookie('access_token', AuthController.createToken(req.user as User), { httpOnly: false, secure: true, sameSite: 'none' })
+    return res.redirect(settings.clientUrl);
+  }
 
-    // Redirect to the swagger docs if the referer is not set
-    const referer = req.get('Referer');
-    return res.redirect(referer ? settings.clientUrl : '/');
+  public googleCallbackInternal(req: Request, res: Response, _next: NextFunction) {
+    res.cookie('access_token', AuthController.createToken(req.user as User), { httpOnly: false, secure: true, sameSite: 'none' })
+    return res.redirect('/docs');
   }
 
   public async login(req: Request, res: Response, _next: NextFunction) {
@@ -39,9 +41,9 @@ export class AuthController {
 
   public async session(req: Request, res: Response, _next: NextFunction) {
     if(!req.user) {
-      return res.status(401).json({ message: 'Authentication failed' });
+      return res.status(401).json({ message: 'Invalid session'});
     }
-    return res.json({ message: 'Authentication successful' });
+    return res.json({ message: 'Valid session' });
   }
 
   public static createToken(user: User) {

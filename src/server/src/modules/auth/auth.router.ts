@@ -28,7 +28,7 @@ export class AuthRouter extends ModuleRouter {
      * /auth/google:
      *   get:
      *     summary: Authenticate with Google
-     *     description: IMPORTANT! For Google authentication to work, you will have to manually go to <a href="/auth/google">/auth/google</a> in url bar. If login will be successful, you will be redirected back to /docs page with Bearer Token in header. You can try successful login by executing /auth/profile request in Swagger UI.
+     *     description: This method is intended for calling via the client
      *     tags: [Auth]
      */
     this.router.get(
@@ -40,9 +40,26 @@ export class AuthRouter extends ModuleRouter {
 
     /**
      * @swagger
+     * /auth/google/internal:
+     *   get:
+     *     summary: Internal Authenticate with Google
+     *     description: This method is intended for calling from Swagger. For Google authentication to work, you will have to manually go to <a href="/auth/google/internal">/auth/google/internal</a> in url bar. If login will be successful, you will be redirected back to /docs page with Bearer Token in header. You can try successful login by executing /auth/profile request in Swagger UI.
+     *     tags: [Auth]
+     */
+    this.router.get(
+        '/google/internal',
+        passport.authenticate('google-internal', {
+          scope: ['email', 'profile'],
+        })
+    );
+
+
+    /**
+     * @swagger
      * /auth/google/callback:
      *   get:
      *     summary: Google authentication callback
+     *     description: This method will be called by Google after authentication
      *     tags: [Auth]
      *     responses:
      *       302:
@@ -53,7 +70,24 @@ export class AuthRouter extends ModuleRouter {
       passport.authenticate('google', {
         failureRedirect: `${settings.clientUrl}/sign-in`,
       }), this.controller.googleCallback
+    );
 
+    /**
+     * @swagger
+     * /auth/google/callback/internal:
+     *   get:
+     *     summary: Internal Google authentication callback
+     *     description: This method will be called by Google after internal authentication
+     *     tags: [Auth]
+     *     responses:
+     *       302:
+     *         description: Redirect to success or failure route based on authentication result
+     */
+    this.router.get(
+        '/google/callback/internal',
+        passport.authenticate('google-internal', {
+          failureRedirect: `/docs`,
+        }), this.controller.googleCallbackInternal
     );
 
     /**
