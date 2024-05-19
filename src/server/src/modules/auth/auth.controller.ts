@@ -27,6 +27,7 @@ export class AuthController {
     }
     const token = AuthController.createToken(req.user as User);
 
+
     return res.json({ accessToken: token });
   }
 

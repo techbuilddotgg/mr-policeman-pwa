@@ -5,7 +5,14 @@ import {
   varchar,
   boolean,
   timestamp,
+    pgEnum
 } from 'drizzle-orm/pg-core';
+
+export enum Provider {
+    Email = 'email',
+    Google = 'google',
+}
+export const providerEnum = pgEnum('provider', [Provider.Email, Provider.Google]);
 
 export const radars = pgTable('radars', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -19,6 +26,7 @@ export const users = pgTable('users', {
   username: varchar('username').notNull(),
   email: varchar('email').notNull().unique(),
   password: varchar('password'),
+  provider: providerEnum('provider').default(Provider.Email).notNull(),
 });
 
 export const notificationSettings = pgTable('notification_settings', {

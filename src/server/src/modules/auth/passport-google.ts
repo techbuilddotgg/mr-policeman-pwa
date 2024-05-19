@@ -6,6 +6,7 @@ import {GoogleProfile} from "./passport.types";
 import {createSessionUser} from "./createSessionUser";
 import {UserService} from "../../services/user.service";
 import {SettingsService} from "../../services/settings.service";
+import {Provider} from "../../common/database/tables";
 
 const userService = new UserService();
 const settingsService = new SettingsService();
@@ -32,7 +33,7 @@ const GoogleCallback = async (
     const isExistingUser = await userService.doesUserExist(profile.email);
 
     if (!isExistingUser) {
-        await userService.createUser(profile.displayName, profile.email);
+        await userService.createUser(profile.displayName, profile.email, Provider.Google);
         await settingsService.createNotificationSettings(profile.email);
     }
 

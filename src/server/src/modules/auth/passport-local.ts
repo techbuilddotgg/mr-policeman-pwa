@@ -2,6 +2,7 @@ import passport from "passport";
 import {Strategy as LocalStrategy} from "passport-local";
 import argon from "argon2";
 import {UserService} from "../../services/user.service";
+import {Provider} from "../../common/database/tables";
 
 const userService = new UserService();
 
@@ -28,7 +29,7 @@ passport.use(
         async (username, password, done) => {
             try {
                 const hashedPassword = await argon.hash(password);
-                const user = await userService.createUser(username, username, hashedPassword);
+                const user = await userService.createUser(username, username, Provider.Email, hashedPassword);
 
                 return done(null, user);
             } catch (error) {

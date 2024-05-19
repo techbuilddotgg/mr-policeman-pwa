@@ -1,7 +1,8 @@
 import { db } from '../common/database/db';
-import { users } from '../common/database/tables';
+import {Provider, users} from '../common/database/tables';
 import { eq } from 'drizzle-orm';
 import {UserUpdate} from "../modules/users/user";
+import argon from "argon2";
 
 export class UserService {
   constructor() {}
@@ -11,10 +12,10 @@ export class UserService {
     return !!user;
   }
 
-  async createUser(username: string, email: string, password?: string) {
+  async createUser(username: string, email: string, provider: Provider, password?: string) {
     const user = await db
       .insert(users)
-      .values({ username: username, email: email, password: password })
+      .values({ username: username, email: email, password: password, provider: provider })
       .returning();
     return user[0];
   }
@@ -29,9 +30,17 @@ export class UserService {
   }
 
   async updateUser(id: string, newUserData: UserUpdate) {
+    const user = await db.select().from(users).where(eq(users.id, id));
+    const updatedUserData = {
+      username: newUserData.username,
+    } as UserUpdate
+
+    if(user[0].provider === Provider.Email) {
+        updatedUserData.password = await argon.hash(newUserData.password);
+    }
     const updatedUser = await db
       .update(users)
-      .set({ username: newUserData.username, password: newUserData.password })
+      .set(updatedUserData)
       .where(eq(users.id, id))
       .returning();
     return updatedUser[0];

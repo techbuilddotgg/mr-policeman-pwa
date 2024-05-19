@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useEffect } from 'react';
-import { useProfileMutation } from '@/lib/hooks/users';
+import { useProfile, useProfileMutation } from '@/lib/hooks/users';
 import { useQueryClient } from '@tanstack/react-query';
 import { userKeys } from '@/lib/api/key-factories';
 import { useRouter } from 'next/navigation';
@@ -15,12 +15,9 @@ interface ProfileForm extends Omit<Profile, 'id' | 'email'> {
   password: string;
 }
 
-interface ProfileFormProps {
-  profile: Profile;
-}
-
-export default function ProfileForm({ profile }: ProfileFormProps) {
+export default function ProfileForm() {
   const router = useRouter();
+  const { data: profile, isLoading } = useProfile();
   const queryClient = useQueryClient();
   const { handleSubmit, register, setValue } = useForm<ProfileForm>({
     defaultValues: {
@@ -62,19 +59,21 @@ export default function ProfileForm({ profile }: ProfileFormProps) {
               autoComplete="off"
             />
           </div>
-          <div className="grid gap-2">
-            <Label className="" htmlFor="password">
-              Geslo
-            </Label>
-            <Input
-              {...register('password')}
-              placeholder="****"
-              type="password"
-              autoCapitalize="none"
-              autoComplete="off"
-              autoCorrect="off"
-            />
-          </div>
+          {profile?.provider === 'email' && (
+            <div className="grid gap-2">
+              <Label className="" htmlFor="password">
+                Geslo
+              </Label>
+              <Input
+                {...register('password')}
+                placeholder="****"
+                type="password"
+                autoCapitalize="none"
+                autoComplete="off"
+                autoCorrect="off"
+              />
+            </div>
+          )}
         </div>
         <Button className="w-fit ">Shrani</Button>
       </div>

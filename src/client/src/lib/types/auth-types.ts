@@ -7,10 +7,15 @@ export interface Credentials {
   password: string;
 }
 
+export enum Provider {
+  GOOGLE = 'google',
+  EMAIL = 'email',
+}
 export interface Profile {
   id: string;
   email: string;
   username: string;
+  provider: Provider;
 }
 
 export interface UpdateProfile {

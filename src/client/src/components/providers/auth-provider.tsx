@@ -10,6 +10,7 @@ export default async function AuthProvider({ children }: AuthProviderProps) {
   try {
     await validateSession();
   } catch (error) {
+    console.log('Session is invalid', error);
     return redirect('/sign-in');
   }
 

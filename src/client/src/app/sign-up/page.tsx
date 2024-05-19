@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useSignUp } from '@/lib/hooks/auth';
 import GoogleSignInButton from '@/components/ui/google-sign-in-button';
 import { Credentials } from '@/lib/types/auth-types';
+import { setCookie } from '@/lib/utils';
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -17,12 +18,12 @@ export default function SignUpPage() {
       password: '',
     },
   });
-  const { mutateAsync } = useSignUp({
-    onSuccess: () => router.replace('/map'),
-  });
+  const { mutateAsync } = useSignUp();
 
   const onSubmit = async (data: Credentials) => {
-    await mutateAsync(data);
+    const token = await mutateAsync(data);
+    setCookie('access_token', token.accessToken);
+    window.location.replace('/map');
   };
   return (
     <div className="mx-auto flex h-dvh w-full flex-col items-center justify-center space-y-6 sm:w-[350px]">

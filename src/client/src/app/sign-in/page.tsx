@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useSignIn } from '@/lib/hooks/auth';
 import GoogleSignInButton from '@/components/ui/google-sign-in-button';
 import { Credentials } from '@/lib/types/auth-types';
+import { setCookie } from '@/lib/utils';
 
 export default function SignInPage() {
   const router = useRouter();
@@ -18,7 +19,10 @@ export default function SignInPage() {
     },
   });
   const { mutateAsync } = useSignIn({
-    onSuccess: () => router.replace('/map'),
+    onSuccess: async (data) => {
+      setCookie('access_token', data.accessToken);
+      window.location.replace('/map');
+    },
   });
 
   const onSubmit = async (data: Credentials) => {
