@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import QueryClientProvider from '@/components/providers/query-client-provider';
 import '@radix-ui/themes/styles.css';
-const inter = Inter({ subsets: ['latin'] });
+import { ThemeProvider } from '@/components/providers/theme-provider';
 import { Theme } from '@radix-ui/themes';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'MR Policeman',
@@ -27,11 +29,18 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <Theme>
-          <QueryClientProvider>{children}</QueryClientProvider>
-        </Theme>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Theme>
+            <QueryClientProvider>{children}</QueryClientProvider>
+          </Theme>
+        </ThemeProvider>
       </body>
     </html>
   );

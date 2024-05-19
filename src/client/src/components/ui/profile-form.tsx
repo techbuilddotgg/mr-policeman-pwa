@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useEffect } from 'react';
-import { useProfile, useProfileMutation } from '@/lib/hooks/users';
+import { useProfileMutation } from '@/lib/hooks/users';
 import { useQueryClient } from '@tanstack/react-query';
 import { userKeys } from '@/lib/api/key-factories';
 import { useRouter } from 'next/navigation';
@@ -15,9 +15,12 @@ interface ProfileForm extends Omit<Profile, 'id' | 'email'> {
   password: string;
 }
 
-export default function ProfileForm() {
+interface ProfileFormProps {
+  profile: Profile;
+}
+
+export default function ProfileForm({ profile }: ProfileFormProps) {
   const router = useRouter();
-  const { data: profile, isLoading } = useProfile();
   const queryClient = useQueryClient();
   const { handleSubmit, register, setValue } = useForm<ProfileForm>({
     defaultValues: {
@@ -52,12 +55,11 @@ export default function ProfileForm() {
             </Label>
             <Input
               {...register('username')}
-              id="username"
               placeholder="name@example.com"
               type="username"
               autoCapitalize="none"
-              autoComplete="username"
               autoCorrect="off"
+              autoComplete="off"
             />
           </div>
           <div className="grid gap-2">
@@ -66,11 +68,10 @@ export default function ProfileForm() {
             </Label>
             <Input
               {...register('password')}
-              id="password"
               placeholder="****"
               type="password"
               autoCapitalize="none"
-              autoComplete="current-password"
+              autoComplete="off"
               autoCorrect="off"
             />
           </div>
