@@ -1,4 +1,4 @@
-import { Container, Heading, Text } from '@radix-ui/themes';
+import { Heading, Text } from '@radix-ui/themes';
 import ProfileForm from '@/components/ui/profile-form';
 import SettingsForm from '@/components/ui/settings-form';
 import { getProfile } from '@/lib/api/users-service';
@@ -7,15 +7,20 @@ export default async function ProfilePage() {
   const profile = await getProfile();
 
   return (
-    <Container size="1" className="mx-24 my-12 w-full" align="left">
-      <Heading className="mb-4">{profile.username}</Heading>
+    <div className="mx-24 my-12">
+      <Heading className="mb-3">{profile.username}</Heading>
       <Text className="mb-4 text-muted-foreground">
-        Tukaj lahko urejate vse informacije o vašem profilu in nastavitve
+        Dobrodošli na strani za urejanje profila in nastavitev uporabnika. Tukaj lahko posodobite
+        svoje osebne podatke in prilagodite nastavitve računa za najboljšo uporabniško izkušnjo.
       </Text>
 
       <div className="mt-12">
-        <Heading size="4">Uredi profil</Heading>
-        <Text className="mb-10 text-muted-foreground">Uredite informacije o vašem profilu</Text>
+        <Heading size="4" className="mb-1">
+          Uredi profil
+        </Heading>
+        <Text className="mb-10 text-muted-foreground">
+          Uredite informacije o vašem profilu kot sta naprimer geslo in uporabniško ime.
+        </Text>
         <ProfileForm />
       </div>
 
@@ -26,6 +31,6 @@ export default async function ProfilePage() {
         </Text>
         <SettingsForm />
       </div>
-    </Container>
+    </div>
   );
 }

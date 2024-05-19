@@ -9,12 +9,14 @@ import { useEffect } from 'react';
 import { useProfile, useProfileMutation } from '@/lib/hooks/users';
 import { useQueryClient } from '@tanstack/react-query';
 import { userKeys } from '@/lib/api/key-factories';
+import { useRouter } from 'next/navigation';
 
 interface ProfileForm extends Omit<Profile, 'id' | 'email'> {
   password: string;
 }
 
 export default function ProfileForm() {
+  const router = useRouter();
   const { data: profile, isLoading } = useProfile();
   const queryClient = useQueryClient();
   const { handleSubmit, register, setValue } = useForm<ProfileForm>({
@@ -28,6 +30,7 @@ export default function ProfileForm() {
       await queryClient.invalidateQueries({
         queryKey: userKeys.updateUser(),
       });
+      router.refresh();
     },
   });
   const onSubmit = async (data: ProfileForm) => {
@@ -38,6 +41,7 @@ export default function ProfileForm() {
     setValue('username', profile?.username || '');
     setValue('password', '***************');
   }, [profile]);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-4">
       <div className="grid gap-4">
@@ -71,7 +75,7 @@ export default function ProfileForm() {
             />
           </div>
         </div>
-        <Button className="w-fit">Save</Button>
+        <Button className="w-fit ">Shrani</Button>
       </div>
     </form>
   );
