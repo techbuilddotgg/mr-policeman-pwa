@@ -10,3 +10,8 @@ export const userKeys = {
   all: () => [...userKeys.users, ...userKeys.profile] as const,
   updateUser: () => [...userKeys.all(), 'update'] as const,
 };
+
+export const contributionsKeys = {
+  contributions: ['contributions'] as const,
+  all: () => [...contributionsKeys.contributions] as const,
+};

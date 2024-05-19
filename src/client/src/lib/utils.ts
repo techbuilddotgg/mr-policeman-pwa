@@ -22,3 +22,13 @@ export function setCookie(name: string, value: string) {
 export function isServer() {
   return typeof window === 'undefined';
 }
+
+export const formatDate = (isoDateString: string): string => {
+  const date = new Date(isoDateString);
+
+  const day = date.getUTCDate().toString().padStart(2, '0');
+  const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
+  const year = date.getUTCFullYear();
+
+  return `${day}.${month}.${year}`;
+}
