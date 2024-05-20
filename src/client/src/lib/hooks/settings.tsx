@@ -15,6 +15,24 @@ export const useGeolocationPermission = () => {
         });
       };
     }
-  }, [data]);
+  }, [data?.state]);
+  return { data, ...props };
+};
+
+export const useNotificationPermission = () => {
+  const queryClient = useQueryClient();
+  const { data, ...props } = useQuery({
+    queryKey: ['notification-permission'],
+    queryFn: () => navigator.permissions.query({ name: 'notifications' }),
+  });
+  useEffect(() => {
+    if (data) {
+      data.onchange = () => {
+        queryClient.invalidateQueries({
+          queryKey: ['notification-permission'],
+        });
+      };
+    }
+  }, [data?.state]);
   return { data, ...props };
 };
