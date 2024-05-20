@@ -59,6 +59,10 @@ export default function ProfileForm() {
               autoComplete="off"
             />
           </div>
+          <div className="grid gap-2">
+            <Label htmlFor="email">Email</Label>
+            <Input type="text" value={profile?.email} disabled />
+          </div>
           {profile?.provider === 'email' && (
             <div className="grid gap-2">
               <Label className="" htmlFor="password">

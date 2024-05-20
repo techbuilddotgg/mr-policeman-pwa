@@ -7,7 +7,7 @@ export default async function ProfilePage() {
 
   return (
     <div className="mx-24 my-12">
-      <Heading className="mb-3">{profile.username}</Heading>
+      <Heading className="mb-3">Zdravo {profile.username}</Heading>
       <Text className="mb-4 text-muted-foreground">
         Dobrodošli na strani za urejanje profila in nastavitev uporabnika. Tukaj lahko posodobite
         svoje osebne podatke in prilagodite nastavitve računa za najboljšo uporabniško izkušnjo.
