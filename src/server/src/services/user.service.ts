@@ -35,7 +35,7 @@ export class UserService {
       username: newUserData.username,
     } as UserUpdate
 
-    if(user[0].provider === Provider.Email) {
+    if(user[0].provider === Provider.Email && newUserData.password) {
         updatedUserData.password = await argon.hash(newUserData.password);
     }
     const updatedUser = await db

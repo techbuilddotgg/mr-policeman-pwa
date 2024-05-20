@@ -26,5 +26,5 @@ export interface Profile {
 
 export interface UpdateProfile {
   username: string;
-  password: string;
+  password: string | null;
 }
