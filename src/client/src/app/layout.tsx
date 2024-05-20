@@ -6,6 +6,7 @@ import QueryClientProvider from '@/components/providers/query-client-provider';
 import '@radix-ui/themes/styles.css';
 import { ThemeProvider } from '@/components/providers/theme-provider';
 import { Theme } from '@radix-ui/themes';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
