@@ -3,6 +3,8 @@ import { Router } from 'express';
 import { ControlsService } from '../../services/controls.service';
 import { ModuleRouter } from '../../common/router/module-router.class';
 import isAuthenticated from '../../common/middlewares/authentication.middleware';
+import validate from '../../common/middlewares/validation.middleware';
+import { createControlSchema } from './create-control.schema';
 
 export class ControlsRouter extends ModuleRouter {
   public readonly prefix = '/controls';
@@ -53,6 +55,7 @@ export class ControlsRouter extends ModuleRouter {
     this.router.post(
       '/',
       isAuthenticated,
+      validate(createControlSchema),
       this.controller.createControl.bind(this.controller)
     );
 
