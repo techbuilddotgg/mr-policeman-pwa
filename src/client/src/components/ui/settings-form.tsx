@@ -5,7 +5,7 @@ import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { useGeolocationPermission, useNotificationPermission } from '@/lib/hooks/settings';
 import { Button } from '@/components/ui/button';
-import { deleteCookie } from '@/lib/utils';
+import { deleteCookie, getPermissionStatusLabel } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 
 export default function SettingsForm() {
@@ -14,21 +14,6 @@ export default function SettingsForm() {
   const [darkMode, setDarkMode] = useState(false);
   const { data: locationPermission, isLoading } = useGeolocationPermission();
   const { data: notificationPermission } = useNotificationPermission();
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(() => {});
-  }, [locationPermission]);
-
-  const getLocationPermissionStatus = () => {
-    if (isLoading) return 'Nalaganje...';
-    if (locationPermission?.state === 'granted') {
-      return 'Dovoljen';
-    } else if (locationPermission?.state === 'denied') {
-      return 'Zavrnjen';
-    } else {
-      return 'Vedno vprašaj';
-    }
-  };
 
   const onClickLogout = () => {
     deleteCookie('access_token');
@@ -39,18 +24,8 @@ export default function SettingsForm() {
     setDarkMode(theme === 'dark');
   }, [theme]);
 
-  const getNotificationPermissionStatus = () => {
-    if (isLoading) return 'Nalaganje...';
-    if (notificationPermission?.state === 'granted') {
-      return 'Dovoljen';
-    } else if (notificationPermission?.state === 'denied') {
-      return 'Zavrnjen';
-    } else {
-      return 'Vedno vprašaj';
-    }
-  };
-
   useEffect(() => {
+    navigator.geolocation.getCurrentPosition(() => {});
     Notification.requestPermission();
   }, []);
 
@@ -65,14 +40,14 @@ export default function SettingsForm() {
         />
       </div>
       <div className="flex flex-col">
-        <Label>Obvestila: {getNotificationPermissionStatus()}</Label>
+        <Label>Obvestila: {getPermissionStatusLabel(notificationPermission?.state)}</Label>
         <p className="text-sm text-muted-foreground">
           To nastavitev lahko urejate v nastavitvah brskalnika ali s klikom na ikono za informacije
           na levi strani naslovne vrstice.
         </p>
       </div>
       <div className="flex flex-col">
-        <Label>Dostop do lokacije: {getLocationPermissionStatus()}</Label>
+        <Label>Dostop do lokacije: {getPermissionStatusLabel(locationPermission?.state)}</Label>
         <p className="text-sm text-muted-foreground">
           To nastavitev lahko urejate v nastavitvah brskalnika ali s klikom na ikono za informacije
           na levi strani naslovne vrstice.

@@ -23,6 +23,19 @@ export function isServer() {
   return typeof window === 'undefined';
 }
 
+export const getPermissionStatusLabel = (permission?: PermissionState) => {
+  if (permission === 'granted') {
+    return 'Dovoljen';
+  }
+  if (permission === 'denied') {
+    return 'Zavrnjen';
+  }
+  if (permission === 'prompt') {
+    return 'Vedno vprašaj';
+  }
+  return '/';
+};
+
 export const formatDate = (isoDateString: string): string => {
   const date = new Date(isoDateString);
 
@@ -31,4 +44,4 @@ export const formatDate = (isoDateString: string): string => {
   const year = date.getUTCFullYear();
 
   return `${day}.${month}.${year}`;
-}
+};
