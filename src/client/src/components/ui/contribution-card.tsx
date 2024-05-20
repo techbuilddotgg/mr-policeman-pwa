@@ -1,5 +1,6 @@
 import React from 'react';
 import {Box, Card, Flex, Text, Avatar} from "@radix-ui/themes";
+import {formatDate} from "@/lib/utils";
 
 interface ContributionCardProps {
     name: string;
@@ -18,7 +19,7 @@ const ContributionCard: React.FC<ContributionCardProps> = ({ name, date, contrib
                             {contribution}
                         </Text>
                         <Text as="div" size="3" color="gray" weight="light">
-                            {name}, {date}
+                            {name}, {formatDate(date)}
                         </Text>
                     </Box>
                 </Flex>
