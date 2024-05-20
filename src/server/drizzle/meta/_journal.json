@@ -43,6 +43,13 @@
       "when": 1716198327334,
       "tag": "0005_flawless_vector",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1716199961156,
+      "tag": "0006_petite_dragon_man",
+      "breakpoints": true
     }
   ]
 }

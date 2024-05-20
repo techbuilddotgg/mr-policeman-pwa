@@ -5,6 +5,8 @@ import { ModuleRouter } from '../../common/router/module-router.class';
 import isAuthenticated from '../../common/middlewares/authentication.middleware';
 import validate from '../../common/middlewares/validation.middleware';
 import { createControlSchema } from './create-control.schema';
+import passport from 'passport';
+import { idSchema } from '../../common/validators/common.validators';
 
 export class ControlsRouter extends ModuleRouter {
   public readonly prefix = '/controls';
@@ -33,10 +35,10 @@ export class ControlsRouter extends ModuleRouter {
      *                 type: string
      *                 description: The name of the control
      *               latitude:
-     *                 type: string
+     *                 type: number
      *                 description: The latitude of the control
      *               longitude:
-     *                 type: string
+     *                 type: number
      *                 description: The longitude of the control
      *               description:
      *                 type: string
@@ -102,6 +104,7 @@ export class ControlsRouter extends ModuleRouter {
     this.router.get(
       '/:id',
       isAuthenticated,
+      validate(idSchema),
       this.controller.getControlById.bind(this.controller)
     );
 
@@ -127,6 +130,7 @@ export class ControlsRouter extends ModuleRouter {
     this.router.delete(
       '/:id',
       isAuthenticated,
+      validate(idSchema),
       this.controller.deleteControl.bind(this.controller)
     );
 

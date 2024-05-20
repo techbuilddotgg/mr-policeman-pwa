@@ -6,6 +6,7 @@ import {
   boolean,
   timestamp,
   pgEnum,
+  decimal,
 } from 'drizzle-orm/pg-core';
 
 export enum Provider {
@@ -19,8 +20,8 @@ export const providerEnum = pgEnum('provider', [
 
 export const radars = pgTable('radars', {
   id: uuid('id').primaryKey().defaultRandom(),
-  latitude: integer('latitude').notNull(),
-  longitude: integer('longitude').notNull(),
+  latitude: decimal('latitude').notNull(),
+  longitude: decimal('longitude').notNull(),
   speedLimit: integer('speed_limit').notNull(),
 });
 
@@ -53,8 +54,8 @@ export const contributions = pgTable('contributions', {
 export const controls = pgTable('controls', {
   id: uuid('id').primaryKey().defaultRandom(),
   name: varchar('name').notNull(),
-  latitude: integer('latitude').notNull(),
-  longitude: integer('longitude').notNull(),
+  latitude: decimal('latitude').notNull(),
+  longitude: decimal('longitude').notNull(),
   description: varchar('description'),
   upVotes: integer('up_votes').default(0).notNull(),
   downVotes: integer('down_votes').default(0).notNull(),
