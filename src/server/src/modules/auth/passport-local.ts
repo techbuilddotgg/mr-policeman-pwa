@@ -8,11 +8,16 @@ const userService = new UserService();
 
 passport.use(
     'local',
-    new LocalStrategy(async (username, password, cb) => {
+    new LocalStrategy({
+        usernameField: 'email',
+        passwordField: 'password',
+    },async (username, password, cb) => {
+
         const user = await userService.getUserByEmail(username);
         if (!user || !user.password) {
             return cb(null, false, { message: 'Incorrect username or password.' });
         }
+
         const isPasswordValid = await argon.verify(user.password, password);
 
         if (!isPasswordValid) {
@@ -26,10 +31,16 @@ passport.use(
 passport.use(
     'signup',
     new LocalStrategy(
-        async (username, password, done) => {
+        {
+            usernameField: 'email',
+            passwordField: 'password',
+            passReqToCallback: true,
+        },
+        async (req, username, password, done) => {
+            const userData = req.body
             try {
-                const hashedPassword = await argon.hash(password);
-                const user = await userService.createUser(username, username, Provider.Email, hashedPassword);
+                const hashedPassword = await argon.hash(userData.password);
+                const user = await userService.createUser(userData.username, userData.email, Provider.Email, hashedPassword);
 
                 return done(null, user);
             } catch (error) {

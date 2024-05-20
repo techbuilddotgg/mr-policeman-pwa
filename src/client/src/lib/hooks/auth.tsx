@@ -1,7 +1,7 @@
 import { MutationOptions, useMutation } from '@tanstack/react-query';
 import { authKeys } from '@/lib/api/key-factories';
 import { signIn, signUp } from '@/lib/api/auth-service';
-import { Credentials, TokenResponse } from '@/lib/types/auth-types';
+import { Credentials, SignUpData, TokenResponse } from '@/lib/types/auth-types';
 
 export const useSignIn = (
   options?: Omit<
@@ -16,10 +16,7 @@ export const useSignIn = (
   });
 
 export const useSignUp = (
-  options?: Omit<
-    MutationOptions<TokenResponse, unknown, Credentials>,
-    'mutationKey' | 'mutationFn'
-  >,
+  options?: Omit<MutationOptions<TokenResponse, unknown, SignUpData>, 'mutationKey' | 'mutationFn'>,
 ) =>
   useMutation({
     ...options,

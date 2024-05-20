@@ -1,7 +1,7 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { Profile } from '@/lib/types/auth-types';
+import { UpdateProfile } from '@/lib/types/auth-types';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -11,18 +11,14 @@ import { useQueryClient } from '@tanstack/react-query';
 import { userKeys } from '@/lib/api/key-factories';
 import { useRouter } from 'next/navigation';
 
-interface ProfileForm extends Omit<Profile, 'id' | 'email'> {
-  password: string;
-}
-
 export default function ProfileForm() {
   const router = useRouter();
   const { data: profile, isLoading } = useProfile();
   const queryClient = useQueryClient();
-  const { handleSubmit, register, setValue } = useForm<ProfileForm>({
+  const { handleSubmit, register, setValue, formState, resetField } = useForm<UpdateProfile>({
     defaultValues: {
       username: '',
-      password: '',
+      password: null,
     },
   });
   const { mutateAsync: updateProfile } = useProfileMutation({
@@ -31,15 +27,16 @@ export default function ProfileForm() {
         queryKey: userKeys.updateUser(),
       });
       router.refresh();
+      resetField('password');
     },
   });
-  const onSubmit = async (data: ProfileForm) => {
+  const onSubmit = async (data: UpdateProfile) => {
     await updateProfile(data);
   };
 
   useEffect(() => {
     setValue('username', profile?.username || '');
-    setValue('password', '***************');
+    setValue('password', null);
   }, [profile]);
 
   return (
@@ -59,14 +56,18 @@ export default function ProfileForm() {
               autoComplete="off"
             />
           </div>
+          <div className="grid gap-2">
+            <Label htmlFor="email">Email</Label>
+            <Input type="text" value={profile?.email} disabled />
+          </div>
           {profile?.provider === 'email' && (
             <div className="grid gap-2">
               <Label className="" htmlFor="password">
-                Geslo
+                Novo Geslo
               </Label>
               <Input
                 {...register('password')}
-                placeholder="****"
+                placeholder="********"
                 type="password"
                 autoCapitalize="none"
                 autoComplete="off"

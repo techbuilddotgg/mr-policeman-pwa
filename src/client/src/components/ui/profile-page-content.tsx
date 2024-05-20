@@ -22,7 +22,7 @@ export default function ProfilePageContent() {
             <ProfileForm />
           </Suspense>
         </div>
-        <div>
+        <div className="mt-14">
           <Heading size="4" className="mb-1">
             Nastavitve
           </Heading>
