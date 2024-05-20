@@ -14,7 +14,7 @@ export default function SignInPage() {
   const router = useRouter();
   const { handleSubmit, register } = useForm<Credentials>({
     defaultValues: {
-      username: '',
+      email: '',
       password: '',
     },
   });
@@ -36,31 +36,34 @@ export default function SignInPage() {
           Enter your credentials to sign in to your account
         </p>
       </div>
-      <div className="grid w-full gap-6">
+      <div className="grid w-full gap-7">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid gap-4">
+          <div className="grid gap-5">
             <div className="grid gap-2">
-              <Label className="sr-only" htmlFor="email">
-                Email
-              </Label>
-              <Input
-                {...register('username')}
-                id="username"
-                placeholder="name@example.com"
-                type="username"
-                autoCapitalize="none"
-                autoComplete="username"
-                autoCorrect="off"
-              />
-              <Input
-                {...register('password')}
-                id="password"
-                placeholder="****"
-                type="password"
-                autoCapitalize="none"
-                autoComplete="current-password"
-                autoCorrect="off"
-              />
+              <div>
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  {...register('email')}
+                  id="email"
+                  placeholder="name@example.com"
+                  type="email"
+                  autoCapitalize="none"
+                  autoComplete="username"
+                  autoCorrect="off"
+                />
+              </div>
+              <div>
+                <Label htmlFor="password">Geslo</Label>
+                <Input
+                  {...register('password')}
+                  id="password"
+                  placeholder="****"
+                  type="password"
+                  autoCapitalize="none"
+                  autoComplete="current-password"
+                  autoCorrect="off"
+                />
+              </div>
             </div>
             <Button>Sign In with Email</Button>
           </div>

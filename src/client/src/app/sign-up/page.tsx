@@ -7,20 +7,21 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { useSignUp } from '@/lib/hooks/auth';
 import GoogleSignInButton from '@/components/ui/google-sign-in-button';
-import { Credentials } from '@/lib/types/auth-types';
+import { SignUpData } from '@/lib/types/auth-types';
 import { setCookie } from '@/lib/utils';
 
 export default function SignUpPage() {
   const router = useRouter();
-  const { handleSubmit, register } = useForm<Credentials>({
+  const { handleSubmit, register } = useForm<SignUpData>({
     defaultValues: {
       username: '',
+      email: '',
       password: '',
     },
   });
   const { mutateAsync } = useSignUp();
 
-  const onSubmit = async (data: Credentials) => {
+  const onSubmit = async (data: SignUpData) => {
     const token = await mutateAsync(data);
     setCookie('access_token', token.accessToken);
     window.location.replace('/map');
@@ -31,31 +32,46 @@ export default function SignUpPage() {
         <h1 className="text-2xl font-semibold tracking-tight">Create an account</h1>
         <p className="text-sm text-muted-foreground">Enter credentials to create new account</p>
       </div>
-      <div className="grid w-full gap-6">
+      <div className="grid w-full gap-7">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid gap-4">
+          <div className="grid gap-5">
             <div className="grid gap-2">
-              <Label className="sr-only" htmlFor="email">
-                Email
-              </Label>
-              <Input
-                {...register('username')}
-                id="username"
-                placeholder="name@example.com"
-                type="username"
-                autoCapitalize="none"
-                autoComplete="username"
-                autoCorrect="off"
-              />
-              <Input
-                {...register('password')}
-                id="password"
-                placeholder="****"
-                type="password"
-                autoCapitalize="none"
-                autoComplete="current-password"
-                autoCorrect="off"
-              />
+              <div>
+                <Label htmlFor="username">Uporabniško ime</Label>
+                <Input
+                  {...register('username')}
+                  id="username"
+                  placeholder="name@example.com"
+                  type="text"
+                  autoCapitalize="none"
+                  autoComplete="username"
+                  autoCorrect="off"
+                />
+              </div>
+              <div>
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  {...register('email')}
+                  id="email"
+                  placeholder="name@example.com"
+                  type="email"
+                  autoCapitalize="none"
+                  autoComplete="email"
+                  autoCorrect="off"
+                />
+              </div>
+              <div>
+                <Label htmlFor="password">Geslo</Label>
+                <Input
+                  {...register('password')}
+                  id="password"
+                  placeholder="****"
+                  type="password"
+                  autoCapitalize="none"
+                  autoComplete="current-password"
+                  autoCorrect="off"
+                />
+              </div>
             </div>
             <Button>Sign Up with Email</Button>
           </div>
