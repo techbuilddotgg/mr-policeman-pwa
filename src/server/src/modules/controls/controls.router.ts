@@ -5,7 +5,6 @@ import { ModuleRouter } from '../../common/router/module-router.class';
 import isAuthenticated from '../../common/middlewares/authentication.middleware';
 import validate from '../../common/middlewares/validation.middleware';
 import { createControlSchema } from './create-control.schema';
-import passport from 'passport';
 import { idSchema } from '../../common/validators/common.validators';
 
 export class ControlsRouter extends ModuleRouter {
