@@ -15,7 +15,7 @@ export default function ProfileForm() {
   const router = useRouter();
   const { data: profile, isLoading } = useProfile();
   const queryClient = useQueryClient();
-  const { handleSubmit, register, setValue } = useForm<UpdateProfile>({
+  const { handleSubmit, register, setValue, formState, resetField } = useForm<UpdateProfile>({
     defaultValues: {
       username: '',
       password: null,
@@ -27,6 +27,7 @@ export default function ProfileForm() {
         queryKey: userKeys.updateUser(),
       });
       router.refresh();
+      resetField('password');
     },
   });
   const onSubmit = async (data: UpdateProfile) => {
