@@ -33,8 +33,9 @@ const GoogleCallback = async (
     const isExistingUser = await userService.doesUserExist(profile.email);
 
     if (!isExistingUser) {
-        await userService.createUser(profile.displayName, profile.email, Provider.Google);
-        await settingsService.createNotificationSettings(profile.email);
+        const user = await userService.createUser(profile.displayName, profile.email, Provider.Google);
+
+        await settingsService.createNotificationSettings(user.id);
     }
 
     return done(null, createSessionUser(accessToken, profile));
