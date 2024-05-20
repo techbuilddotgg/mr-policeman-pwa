@@ -5,14 +5,17 @@ import {
   varchar,
   boolean,
   timestamp,
-    pgEnum
+  pgEnum,
 } from 'drizzle-orm/pg-core';
 
 export enum Provider {
-    Email = 'email',
-    Google = 'google',
+  Email = 'email',
+  Google = 'google',
 }
-export const providerEnum = pgEnum('provider', [Provider.Email, Provider.Google]);
+export const providerEnum = pgEnum('provider', [
+  Provider.Email,
+  Provider.Google,
+]);
 
 export const radars = pgTable('radars', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -44,5 +47,16 @@ export const contributions = pgTable('contributions', {
     .notNull()
     .references(() => users.id),
   text: varchar('description').notNull(),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+});
+
+export const controls = pgTable('controls', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  name: varchar('name').notNull(),
+  latitude: integer('latitude').notNull(),
+  longitude: integer('longitude').notNull(),
+  description: varchar('description'),
+  upVotes: integer('up_votes').default(0).notNull(),
+  downVotes: integer('down_votes').default(0).notNull(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });

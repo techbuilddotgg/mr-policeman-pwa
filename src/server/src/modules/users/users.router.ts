@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { UsersController } from './users.controller';
 import { UserService } from '../../services/user.service';
 import isAuthenticated from '../../common/middlewares/authentication.middleware';
-import passport from "passport";
+import passport from 'passport';
 
 export class UsersRouter extends ModuleRouter {
   public readonly prefix = '/users';
@@ -31,10 +31,6 @@ export class UsersRouter extends ModuleRouter {
      *     responses:
      *       200:
      *         description: User data
-     *         content:
-     *           application/json:
-     *             schema:
-     *               $ref: '#/components/schemas/User'
      *       404:
      *         description: User not found
      */
@@ -87,7 +83,11 @@ export class UsersRouter extends ModuleRouter {
      *                   type: object
      *                   description: Authenticated user's profile information
      */
-    this.router.get('/profile', passport.authenticate('jwt'), this.controller.getProfile);
+    this.router.get(
+      '/profile',
+      passport.authenticate('jwt'),
+      this.controller.getProfile
+    );
 
     /**
      * @swagger
@@ -114,12 +114,12 @@ export class UsersRouter extends ModuleRouter {
      *     responses:
      *       200:
      *         description: User data
-     *         content:
-     *           application/json:
-     *             schema:
-     *               $ref: '#/components/schemas/User'
-    */
-    this.router.patch('/', passport.authenticate('jwt'), this.controller.updateProfile);
+     */
+    this.router.patch(
+      '/',
+      passport.authenticate('jwt'),
+      this.controller.updateProfile
+    );
 
     return this.router;
   }
