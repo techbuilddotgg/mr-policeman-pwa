@@ -44,12 +44,7 @@ export default function Home() {
         mapStyle="mapbox://styles/mapbox/streets-v9"
         onClick={handleMapClick}
       >
-        <AdvancedMarker
-          longitude={15.625555}
-          latitude={46.559275}
-          color={'blue'}
-          onClick={handleMarkerClick}
-        />
+        <AdvancedMarker longitude={15.625555} latitude={46.559275} onClick={handleMarkerClick} />
       </Map>
     </div>
   );
