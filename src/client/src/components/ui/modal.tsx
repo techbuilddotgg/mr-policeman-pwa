@@ -7,30 +7,31 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 
 interface ModalProps {
   header: string;
   description: string;
-  children: React.ReactNode;
-  trigger: React.ReactNode;
+  isOpen: boolean;
+  onClose: () => void;
+  children?: React.ReactNode;
 }
 
-const Modal: FC<ModalProps> = ({ children, description, header, trigger }) => {
+const Modal: FC<ModalProps> = ({ children, description, header, isOpen, onClose }) => {
   return (
-    <Dialog>
-      <DialogTrigger asChild>{trigger}</DialogTrigger>
+    <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>{header}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
-        {children}
+        {children && <div>{children}</div>}
         <DialogFooter>
           <DialogClose asChild>
-            <Button type="submit">Save changes</Button>
+            <Button type="submit" onClick={onClose}>
+              Save changes
+            </Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>
