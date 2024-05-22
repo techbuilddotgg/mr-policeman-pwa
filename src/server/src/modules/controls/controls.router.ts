@@ -55,7 +55,7 @@ export class ControlsRouter extends ModuleRouter {
      */
     this.router.post(
       '/',
-      isAuthenticated,
+      // isAuthenticated,
       validate(createControlSchema),
       this.controller.createControl.bind(this.controller)
     );
@@ -74,7 +74,7 @@ export class ControlsRouter extends ModuleRouter {
      */
     this.router.get(
       '/',
-      isAuthenticated,
+      // isAuthenticated,
       this.controller.getControls.bind(this.controller)
     );
 
@@ -102,7 +102,7 @@ export class ControlsRouter extends ModuleRouter {
      */
     this.router.get(
       '/:id',
-      isAuthenticated,
+      // isAuthenticated,
       validate(idSchema),
       this.controller.getControlById.bind(this.controller)
     );

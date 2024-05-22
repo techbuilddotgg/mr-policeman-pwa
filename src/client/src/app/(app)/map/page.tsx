@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Map from 'react-map-gl';
 import AdvancedMarker from '@/components/ui/advanced-marker';
 import Modal from '@/components/ui/modal';
+import ControlForm from '@/components/ui/control-form';
 
 export default function Home() {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -26,12 +27,7 @@ export default function Home() {
 
   return (
     <div className="w-full">
-      <Modal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        header="Modal Header"
-        description="This is a description for the modal."
-      />
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal} children={<ControlForm />} />
       <Map
         reuseMaps
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}

@@ -15,3 +15,9 @@ export const contributionsKeys = {
   contributions: ['contributions'] as const,
   all: () => [...contributionsKeys.contributions] as const,
 };
+
+export const controlKeys = {
+  control: ['control'] as const,
+  all: () => [...controlKeys.control] as const,
+  createControl: () => [...controlKeys.control, 'create'] as const,
+};
