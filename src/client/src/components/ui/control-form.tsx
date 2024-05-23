@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -15,14 +15,19 @@ import { Control } from '@/lib/types/control-types';
 import { controlKeys } from '@/lib/api/key-factories';
 import { Button } from '@/components/ui/button';
 
-const ControlForm = () => {
+interface ControlFormProps {
+  latitude: number;
+  longitude: number;
+}
+
+const ControlForm: FC<ControlFormProps> = ({ latitude, longitude }) => {
   const queryClient = useQueryClient();
   const { handleSubmit, register, setValue, formState, resetField } = useForm<Control>({
     defaultValues: {
       name: '',
       description: '',
-      latitude: 0,
-      longitude: 0,
+      latitude: latitude,
+      longitude: longitude,
     },
   });
 
