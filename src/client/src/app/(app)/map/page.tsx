@@ -20,7 +20,7 @@ enum ModalContent {
 }
 
 export default function Home() {
-  const { data: controls, isLoading } = useControls();
+  const { data: controls, isLoading, refetch } = useControls();
   const [isModalOpen, setModalOpen] = useState(false);
   const [coordinates, setCoordinates] = useState(defaultCoordinatesValue);
   const [content, setContent] = useState(ModalContent.Form);
@@ -30,7 +30,7 @@ export default function Home() {
   };
 
   const handleCloseModal = () => {
-    setModalOpen(false);
+    refetch().then(() => setModalOpen(false));
   };
 
   const handleMarkerClick = (control: Control) => {
