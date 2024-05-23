@@ -1,18 +1,26 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Marker } from 'react-map-gl';
 
-interface AdvancedMarkerProps {
+interface AdvancedMarkerProps<T> {
   longitude: number;
   latitude: number;
-  onClick?: () => void;
+  data: T;
+  onClick?: (data: T) => void;
 }
 
-const AdvancedMarker: FC<AdvancedMarkerProps> = ({ longitude, latitude, onClick }) => {
+const AdvancedMarker = <T,>({ longitude, latitude, data, onClick }: AdvancedMarkerProps<T>) => {
+  const handleClick = () => {
+    if (onClick) {
+      onClick(data);
+    }
+  };
+
   return (
-    <Marker longitude={longitude} latitude={latitude} onClick={onClick}>
+    <Marker longitude={longitude} latitude={latitude}>
       <div
         onClick={(e) => {
           e.stopPropagation();
+          handleClick();
         }}
         style={{ cursor: 'pointer' }}
       >
