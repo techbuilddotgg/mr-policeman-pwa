@@ -24,6 +24,7 @@ export default function Home() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [coordinates, setCoordinates] = useState(defaultCoordinatesValue);
   const [content, setContent] = useState(ModalContent.Form);
+  const [selectedControl, setSelectedControl] = useState<Control | null>(null);
 
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -35,6 +36,7 @@ export default function Home() {
 
   const handleMarkerClick = (control: Control) => {
     console.log('Marker clicked:', control);
+    setSelectedControl(control);
     setContent(ModalContent.Info);
     handleOpenModal();
   };
@@ -61,7 +63,7 @@ export default function Home() {
           content === ModalContent.Form ? (
             <ControlForm latitude={coordinates.latitude} longitude={coordinates.longitude} />
           ) : content === ModalContent.Info ? (
-            <ControlInformation />
+            <ControlInformation control={selectedControl} />
           ) : null
         }
       />

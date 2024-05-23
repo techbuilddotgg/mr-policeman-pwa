@@ -45,3 +45,14 @@ export const formatDate = (isoDateString: string): string => {
 
   return `${day}.${month}.${year}`;
 };
+
+export const formatDateTime = (isoDateString: string) => {
+  const datetime = new Date(isoDateString);
+  const date = formatDate(isoDateString);
+
+  const hours = datetime.getHours().toString().padStart(2, '0');
+  const minutes = datetime.getMinutes().toString().padStart(2, '0');
+  const seconds = datetime.getSeconds().toString().padStart(2, '0');
+
+  return date + ' ' + hours + ':' + minutes + ':' + seconds;
+};
