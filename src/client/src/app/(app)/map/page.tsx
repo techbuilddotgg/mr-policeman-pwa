@@ -58,9 +58,9 @@ export default function Home() {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         children={
-          content === 'form' ? (
+          content === ModalContent.Form ? (
             <ControlForm latitude={coordinates.latitude} longitude={coordinates.longitude} />
-          ) : content === 'info' ? (
+          ) : content === ModalContent.Info ? (
             <ControlInformation />
           ) : null
         }
