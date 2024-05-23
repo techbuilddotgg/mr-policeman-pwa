@@ -35,7 +35,6 @@ export default function Home() {
   };
 
   const handleMarkerClick = (control: Control) => {
-    console.log('Marker clicked:', control);
     setSelectedControl(control);
     setContent(ModalContent.Info);
     handleOpenModal();
@@ -48,11 +47,8 @@ export default function Home() {
     });
 
     setContent(ModalContent.Form);
-
     handleOpenModal();
   };
-
-  console.log(controls);
 
   useEffect(() => {
     if (!controls || !Array.isArray(controls)) {
