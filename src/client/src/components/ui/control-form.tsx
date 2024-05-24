@@ -34,7 +34,7 @@ const ControlForm: FC<ControlFormProps> = ({ latitude, longitude }) => {
   const { mutateAsync: createControl } = useControlMutation({
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: controlKeys.createControl(),
+        queryKey: controlKeys.controls,
       });
     },
   });

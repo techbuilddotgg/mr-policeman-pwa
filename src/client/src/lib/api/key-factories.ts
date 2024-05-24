@@ -17,7 +17,7 @@ export const contributionsKeys = {
 };
 
 export const controlKeys = {
-  control: ['control'] as const,
-  all: () => [...controlKeys.control] as const,
-  createControl: () => [...controlKeys.control, 'create'] as const,
+  controls: ['controls'] as const,
+  getById: (id: string) => [...controlKeys.controls, id] as const,
+  createControl: () => [...controlKeys.controls, 'create'] as const,
 };

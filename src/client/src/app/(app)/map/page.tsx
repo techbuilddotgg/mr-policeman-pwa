@@ -8,6 +8,7 @@ import mapboxgl from 'mapbox-gl';
 import { useControls } from '@/lib/hooks/control';
 import { Control } from '@/lib/types/control-types';
 import ControlInformation from '@/components/ui/control-information';
+import { useQueryClient } from '@tanstack/react-query';
 
 const defaultCoordinatesValue = {
   latitude: 0,
@@ -20,6 +21,7 @@ enum ModalContent {
 }
 
 export default function Home() {
+  const queryClient = useQueryClient();
   const { data: controls, isLoading, refetch } = useControls();
   const [isModalOpen, setModalOpen] = useState(false);
   const [coordinates, setCoordinates] = useState(defaultCoordinatesValue);
@@ -30,8 +32,8 @@ export default function Home() {
     setModalOpen(true);
   };
 
-  const handleCloseModal = () => {
-    refetch().then(() => setModalOpen(false));
+  const handleCloseModal = async () => {
+    setModalOpen(false);
   };
 
   const handleMarkerClick = (control: Control) => {

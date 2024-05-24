@@ -18,13 +18,13 @@ export const useControl = (
 ) =>
   useQuery({
     ...options,
-    queryKey: controlKeys.control,
+    queryKey: controlKeys.getById(id),
     queryFn: () => getControl(id), // Pass a function reference here
   });
 
 export const useControls = () => {
   return useQuery({
-    queryKey: ['all'],
+    queryKey: controlKeys.controls,
     queryFn: getControls,
   });
 };
