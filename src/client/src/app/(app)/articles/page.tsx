@@ -9,7 +9,6 @@ import React from "react";
 export default async function ArticlesPage() {
     //const { data: contributions } = useContributions();
     const contributions = await getContributions();
-
   return (
       <Container size="1" className="mx-24 my-12" align="left">
           <Badge color="blue" className="mb-2">Ne spreglej</Badge>
@@ -22,7 +21,7 @@ export default async function ArticlesPage() {
           <Flex gap="4" direction="column" className="mb-40">
               {contributions.length === 0 ? <Text as="div" size="4" weight="bold" color="gray" className="mb-2">Ni prispevkov.</Text> :
                   contributions.map((contribution) => (
-                      <ContributionCard key={contribution.id} name={"Janez Novak"} date={contribution.createdAt} contribution={contribution.text} />
+                      <ContributionCard key={contribution.id} name={contribution.userName} date={contribution.createdAt} contribution={contribution.text} />
                   ))
               }
           </Flex>

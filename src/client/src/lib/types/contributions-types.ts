@@ -3,4 +3,5 @@ export interface Contribution {
     userId: string;
     text: string;
     createdAt: string;
+    userName: string;
 }

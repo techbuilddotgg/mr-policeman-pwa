@@ -30,7 +30,7 @@ export class ContributionsService {
             text: contributions.text,
             createdAt: contributions.createdAt,
             userId: contributions.userId,
-            username: users.username,
+            userName: users.username,
         })
         .from(contributions)
         .innerJoin(users, eq(contributions.userId, users.id))
