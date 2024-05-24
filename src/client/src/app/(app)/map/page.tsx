@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Map from 'react-map-gl';
 import AdvancedMarker from '@/components/ui/advanced-marker';
 import Modal from '@/components/ui/modal';
@@ -50,12 +50,6 @@ export default function Home() {
     handleOpenModal();
   };
 
-  useEffect(() => {
-    if (!controls || !Array.isArray(controls)) {
-      console.error('Controls data is not an array or is undefined');
-    }
-  }, [controls]);
-
   return (
     <div className="w-full">
       <Modal
@@ -81,7 +75,7 @@ export default function Home() {
         mapStyle="mapbox://styles/mapbox/streets-v9"
         onClick={(e) => handleMapClick(e)}
       >
-        {!isLoading &&
+        {Array.isArray(controls) &&
           controls?.map((control) => (
             <AdvancedMarker
               key={control.id}
