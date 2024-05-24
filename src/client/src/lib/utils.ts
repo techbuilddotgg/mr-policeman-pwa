@@ -56,3 +56,9 @@ export const formatDateTime = (isoDateString: string) => {
 
   return date + ' ' + hours + ':' + minutes + ':' + seconds;
 };
+
+export const getUserGeoLocation = async (): Promise<GeolocationPosition> => {
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};

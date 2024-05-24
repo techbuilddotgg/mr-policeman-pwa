@@ -8,6 +8,7 @@ import mapboxgl from 'mapbox-gl';
 import { useControls } from '@/lib/hooks/control';
 import { Control } from '@/lib/types/control-types';
 import ControlInformation from '@/components/ui/control-information';
+import { getUserGeoLocation } from '@/lib/utils';
 
 const defaultCoordinatesValue = {
   latitude: 0,
@@ -25,6 +26,7 @@ export default function Home() {
   const [coordinates, setCoordinates] = useState(defaultCoordinatesValue);
   const [content, setContent] = useState(ModalContent.Form);
   const [selectedControl, setSelectedControl] = useState<Control | null>(null);
+  const [userLocation, setUserLocation] = useState<GeolocationCoordinates | null>(null);
 
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -50,6 +52,19 @@ export default function Home() {
     handleOpenModal();
   };
 
+  useEffect(() => {
+    getUserGeoLocation()
+      .then((position) => {
+        console.log(position.coords.longitude);
+        console.log(position.coords.latitude);
+        setUserLocation(position.coords);
+      })
+      .catch((err) => {
+        setUserLocation(null);
+        console.error(err);
+      });
+  }, []);
+
   return (
     <div className="w-full">
       <Modal
@@ -67,8 +82,8 @@ export default function Home() {
         reuseMaps
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
         initialViewState={{
-          longitude: 15.625555,
-          latitude: 46.559275,
+          longitude: userLocation?.longitude || 15.6361,
+          latitude: userLocation?.latitude || 46.0569,
           zoom: 14,
         }}
         style={{ height: '100vh' }}
