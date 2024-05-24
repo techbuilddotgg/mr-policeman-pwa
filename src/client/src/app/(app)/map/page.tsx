@@ -84,7 +84,7 @@ export default function Home() {
         mapStyle="mapbox://styles/mapbox/streets-v9"
         onClick={(e) => handleMapClick(e)}
       >
-        {!isLoading &&
+        {Array.isArray(controls) &&
           controls?.map((control) => (
             <AdvancedMarker
               key={control.id}
