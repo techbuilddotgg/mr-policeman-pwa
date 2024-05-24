@@ -55,8 +55,6 @@ export default function Home() {
   useEffect(() => {
     getUserGeoLocation()
       .then((position) => {
-        console.log(position.coords.longitude);
-        console.log(position.coords.latitude);
         setUserLocation(position.coords);
       })
       .catch((err) => {
