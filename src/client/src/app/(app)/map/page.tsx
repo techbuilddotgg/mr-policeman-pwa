@@ -8,7 +8,6 @@ import mapboxgl from 'mapbox-gl';
 import { useControls } from '@/lib/hooks/control';
 import { Control } from '@/lib/types/control-types';
 import ControlInformation from '@/components/ui/control-information';
-import { useQueryClient } from '@tanstack/react-query';
 
 const defaultCoordinatesValue = {
   latitude: 0,
@@ -21,8 +20,7 @@ enum ModalContent {
 }
 
 export default function Home() {
-  const queryClient = useQueryClient();
-  const { data: controls, isLoading, refetch } = useControls();
+  const { data: controls, isLoading } = useControls();
   const [isModalOpen, setModalOpen] = useState(false);
   const [coordinates, setCoordinates] = useState(defaultCoordinatesValue);
   const [content, setContent] = useState(ModalContent.Form);
@@ -52,15 +50,6 @@ export default function Home() {
     handleOpenModal();
   };
 
-  useEffect(() => {
-    console.log(controls);
-    if (!controls || !Array.isArray(controls)) {
-      console.error('Controls data is not an array or is undefined');
-    }
-  }, [controls]);
-
-  console.log(controls, isLoading);
-
   return (
     <div className="w-full">
       <Modal
@@ -86,7 +75,7 @@ export default function Home() {
         mapStyle="mapbox://styles/mapbox/streets-v9"
         onClick={(e) => handleMapClick(e)}
       >
-        {Array.isArray(controls) &&
+        {!isLoading &&
           controls?.map((control) => (
             <AdvancedMarker
               key={control.id}
