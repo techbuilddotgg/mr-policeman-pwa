@@ -27,7 +27,7 @@ export default function SignUpPage() {
     window.location.replace('/map');
   };
   return (
-    <div className="mx-auto flex h-dvh w-full flex-col items-center justify-center space-y-6 sm:w-[350px]">
+    <div className="mx-auto flex h-dvh w-full flex-col items-center justify-center space-y-6 px-10 sm:w-[350px] sm:px-0">
       <div className="flex flex-col space-y-2 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">Create an account</h1>
         <p className="text-sm text-muted-foreground">Enter credentials to create new account</p>

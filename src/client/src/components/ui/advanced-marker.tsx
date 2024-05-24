@@ -16,7 +16,7 @@ const AdvancedMarker = <T,>({ longitude, latitude, data, onClick }: AdvancedMark
   };
 
   return (
-    <Marker longitude={longitude} latitude={latitude}>
+    <Marker longitude={longitude} latitude={latitude} anchor={'bottom'}>
       <div
         onClick={(e) => {
           e.stopPropagation();
