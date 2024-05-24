@@ -1,5 +1,5 @@
 import { db } from '../common/database/db';
-import { contributions } from '../common/database/tables';
+import {contributions, users} from '../common/database/tables';
 import { eq } from 'drizzle-orm';
 
 export class ContributionsService {
@@ -24,7 +24,17 @@ export class ContributionsService {
   }
 
   async getContributions() {
-    return await db.select().from(contributions).execute();
+    return await db
+        .select({
+            id: contributions.id,
+            text: contributions.text,
+            createdAt: contributions.createdAt,
+            userId: contributions.userId,
+            username: users.username,
+        })
+        .from(contributions)
+        .innerJoin(users, eq(contributions.userId, users.id))
+        .execute();
   }
 
   async deleteContribution(id: string) {
