@@ -18,6 +18,7 @@ export class ControlsController {
   async getControls(req: Request, res: Response, next: NextFunction) {
     try {
       const controls = await this.controlsService.getControls();
+      console.log(controls)
       return res.status(200).json(controls);
     } catch (error) {
       console.error(error);

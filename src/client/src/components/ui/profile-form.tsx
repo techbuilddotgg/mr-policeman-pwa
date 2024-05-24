@@ -15,12 +15,14 @@ export default function ProfileForm() {
   const router = useRouter();
   const { data: profile, isLoading } = useProfile();
   const queryClient = useQueryClient();
+
   const { handleSubmit, register, setValue, formState, resetField } = useForm<UpdateProfile>({
     defaultValues: {
-      username: '',
-      password: null,
+      username: profile?.username || '',
+      password: '',
     },
   });
+
   const { mutateAsync: updateProfile } = useProfileMutation({
     onSuccess: async () => {
       await queryClient.invalidateQueries({
@@ -30,13 +32,16 @@ export default function ProfileForm() {
       resetField('password');
     },
   });
+
   const onSubmit = async (data: UpdateProfile) => {
     await updateProfile(data);
   };
 
   useEffect(() => {
-    setValue('username', profile?.username || '');
-    setValue('password', null);
+    if (profile) {
+      setValue('username', profile.username || '');
+      setValue('password', '');
+    }
   }, [profile]);
 
   return (
@@ -44,13 +49,11 @@ export default function ProfileForm() {
       <div className="grid gap-4">
         <div className="grid gap-3">
           <div className="grid gap-2">
-            <Label className="" htmlFor="username">
-              Username
-            </Label>
+            <Label htmlFor="username">Username</Label>
             <Input
               {...register('username')}
               placeholder="name@example.com"
-              type="username"
+              type="text"
               autoCapitalize="none"
               autoCorrect="off"
               autoComplete="off"
@@ -58,13 +61,11 @@ export default function ProfileForm() {
           </div>
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
-            <Input type="text" value={profile?.email} disabled />
+            <Input type="text" value={profile?.email || ''} disabled />
           </div>
           {profile?.provider === 'email' && (
             <div className="grid gap-2">
-              <Label className="" htmlFor="password">
-                Novo Geslo
-              </Label>
+              <Label htmlFor="password">Novo Geslo</Label>
               <Input
                 {...register('password')}
                 placeholder="********"
@@ -76,7 +77,7 @@ export default function ProfileForm() {
             </div>
           )}
         </div>
-        <Button className="w-fit ">Shrani</Button>
+        <Button className="w-fit">Shrani</Button>
       </div>
     </form>
   );

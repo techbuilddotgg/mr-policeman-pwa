@@ -51,10 +51,13 @@ export default function Home() {
   };
 
   useEffect(() => {
+    console.log(controls);
     if (!controls || !Array.isArray(controls)) {
       console.error('Controls data is not an array or is undefined');
     }
   }, [controls]);
+
+  console.log(controls, isLoading);
 
   return (
     <div className="w-full">

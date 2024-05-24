@@ -50,6 +50,13 @@
       "when": 1716199961156,
       "tag": "0006_petite_dragon_man",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1716541688333,
+      "tag": "0007_tricky_luckman",
+      "breakpoints": true
     }
   ]
 }
