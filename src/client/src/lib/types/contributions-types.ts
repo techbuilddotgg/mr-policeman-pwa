@@ -5,3 +5,8 @@ export interface Contribution {
     createdAt: string;
     userName: string;
 }
+
+export interface PublishContribution {
+    userId: string;
+    text: string;
+}

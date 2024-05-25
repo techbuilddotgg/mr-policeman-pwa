@@ -14,6 +14,7 @@ export const userKeys = {
 export const contributionsKeys = {
   contributions: ['contributions'] as const,
   all: () => [...contributionsKeys.contributions] as const,
+  createContribution: () => [...contributionsKeys.contributions, 'create'] as const,
 };
 
 export const controlKeys = {
