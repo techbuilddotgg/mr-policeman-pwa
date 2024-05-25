@@ -21,7 +21,11 @@ export default function ArticlesPage() {
           <Badge color="blue" className="mb-2">Ne spreglej</Badge>
           <Heading className="mb-4">Koristne povezave</Heading>
           <Flex gap="1" direction="column" className="mb-12">
-            <LinkCard name={"Da neboš živčn 🎶"} link={"https://www.youtube.com/watch?v=r79ul2vhzpU"} />
+              <LinkCard name={"Stanje na slovenskih cestah 🛣️"} link={"https://www.amzs.si/na-poti/stanje-na-slovenskih-cestah"} />
+              <LinkCard name={"Promet v živo 🚗"} link={"https://www.amzs.si/na-poti/nasveti-za-varno-pot"} />
+              <LinkCard name={"Omejitve hitrosti po Evropi ⚠️"} link={"https://www.amzs.si/na-poti/stanje-na-slovenskih-cestah"} />
+              <LinkCard name={"Nasveti za varno pot 💡"} link={"https://www.amzs.si/na-poti/nasveti-za-varno-pot"} />
+              <LinkCard name={"Da neboš živčn 🎶"} link={"https://www.youtube.com/watch?v=r79ul2vhzpU"} />
           </Flex>
 
           <Heading className="mb-4">Prispevki</Heading>
