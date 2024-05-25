@@ -7,9 +7,11 @@ import {PlusIcon} from "lucide-react";
 import React, { useState } from 'react';
 import {useContributions} from "@/lib/hooks/contributions";
 import ContributionForm from "@/components/ui/contribution-form";
+import {useProfile} from "@/lib/hooks/users";
 
 export default function ArticlesPage() {
     const { data: contributions, isLoading: isLoadingContributions } = useContributions();
+    const { data: profile, isLoading: isLoadingProfile } = useProfile();
 
     const [isModalOpen, setModalOpen] = useState(false);
     const handleClick = () => {
@@ -38,9 +40,10 @@ export default function ArticlesPage() {
                   contributions!.map((contribution) => (
                       <ContributionCard
                           key={contribution.id}
-                          name={contribution.userName}
+                          contributorName={contribution.userName}
                           date={contribution.createdAt}
                           contribution={contribution.text}
+                          userName={profile?.username}
                       />
                   ))
               )}
