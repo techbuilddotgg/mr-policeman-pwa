@@ -13,10 +13,10 @@ export default function NavigationBar() {
   return (
     <Tabs
       defaultValue={getDefault()}
-      className="fixed bottom-14 left-1/2 h-16 w-[600px] -translate-x-1/2"
+      className="fixed bottom-5 left-1/2 h-32 w-11/12 -translate-x-1/2 sm:bottom-14 sm:h-16 sm:w-[600px]"
     >
-      <TabsList className="flex h-full w-full">
-        <Link href="/map" className="h-full w-full  p-0.5">
+      <TabsList className="flex h-full w-full flex-col sm:flex-row">
+        <Link href="/map" className="h-full w-full p-0.5">
           <TabsTrigger className="h-full w-full" value="map">
             Map
           </TabsTrigger>

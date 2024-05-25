@@ -3,4 +3,10 @@ export interface Contribution {
     userId: string;
     text: string;
     createdAt: string;
+    userName: string;
+}
+
+export interface PublishContribution {
+    userId: string;
+    text: string;
 }

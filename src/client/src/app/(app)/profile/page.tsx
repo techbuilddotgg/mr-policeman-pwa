@@ -6,7 +6,7 @@ export default async function ProfilePage() {
   const profile = await getProfile();
 
   return (
-    <div className="mx-24 my-12">
+    <div className="mx-24 mt-12 pb-44">
       <Heading className="mb-3">Zdravo {profile.username}</Heading>
       <Text className="mb-4 text-muted-foreground">
         Dobrodošli na strani za urejanje profila in nastavitev uporabnika. Tukaj lahko posodobite
