@@ -10,10 +10,10 @@ export default function GoogleSignInButton() {
     <Button
       variant="outline"
       type="button"
-      onClick={() => router.push(`${env.NEXT_PUBLIC_BACKEND_URL}${Endpoints.AUTH}/google`)}
+      onClick={() => router.push(`${env.NEXT_PUBLIC_BACKEND_URL}${Endpoints.AUTH}/google` as any)}
     >
       <Image src="/google-icon.png" alt="Google logo" width={20} height={20} />
-      <p className="ml-2">Sign in with Google</p>
+      <p className="ml-2">Prijava z Google računom</p>
     </Button>
   );
 }

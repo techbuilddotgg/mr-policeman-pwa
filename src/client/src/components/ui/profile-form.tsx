@@ -4,17 +4,19 @@ import { useForm } from 'react-hook-form';
 import { UpdateProfile } from '@/lib/types/auth-types';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { useEffect } from 'react';
 import { useProfile, useProfileMutation } from '@/lib/hooks/users';
 import { useQueryClient } from '@tanstack/react-query';
 import { userKeys } from '@/lib/api/key-factories';
 import { useRouter } from 'next/navigation';
+import LoadingButton from '@/components/ui/loading-button';
+import { useToast } from '@/components/ui/use-toast';
 
 export default function ProfileForm() {
   const router = useRouter();
   const { data: profile, isLoading } = useProfile();
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   const { handleSubmit, register, setValue, formState, resetField } = useForm<UpdateProfile>({
     defaultValues: {
@@ -23,13 +25,17 @@ export default function ProfileForm() {
     },
   });
 
-  const { mutateAsync: updateProfile } = useProfileMutation({
+  const { mutateAsync: updateProfile, isPending } = useProfileMutation({
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: userKeys.updateUser(),
       });
       router.refresh();
       resetField('password');
+      toast({
+        title: 'Profil posodobljen',
+        description: 'Vaš profil je bil uspešno posodobljen',
+      });
     },
   });
 
@@ -77,7 +83,9 @@ export default function ProfileForm() {
             </div>
           )}
         </div>
-        <Button className="w-fit">Shrani</Button>
+        <LoadingButton className="w-fit" isLoading={isPending}>
+          Shrani
+        </LoadingButton>
       </div>
     </form>
   );
