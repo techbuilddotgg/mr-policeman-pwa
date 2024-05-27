@@ -11,3 +11,8 @@ export const createContribution = async (contribution: PublishContribution) => {
     const { data } = await api.post(`${Endpoints.CONTRIBUTIONS}`, contribution);
     return data as Contribution;
 }
+
+export const deleteContribution = async (id: string) => {
+    const { data } = await api.delete(`${Endpoints.CONTRIBUTIONS}/${id}`);
+    return data as string;
+}

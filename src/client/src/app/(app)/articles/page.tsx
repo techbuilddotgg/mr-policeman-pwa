@@ -40,6 +40,7 @@ export default function ArticlesPage() {
                   contributions!.map((contribution) => (
                       <ContributionCard
                           key={contribution.id}
+                          contributionId={contribution.id}
                           contributorName={contribution.userName}
                           date={contribution.createdAt}
                           contribution={contribution.text}
