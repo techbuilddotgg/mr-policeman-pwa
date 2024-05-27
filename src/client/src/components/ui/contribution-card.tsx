@@ -21,14 +21,29 @@ const ContributionCard: React.FC<ContributionCardProps> = ({ contributionId, con
             await queryClient.invalidateQueries({
                 queryKey: contributionsKeys.contributions,
             });
+            new Notification('Obvestilo', {
+                body: 'Prispevek je bil uspešno izbrisan.',
+                icon: '/icons/Icon-36.png',
+            })
         },
+        onError: (error) => {
+            console.error(error);
+            new Notification('Opozorilo', {
+                body: 'Napaka pri brisanju prispevka.',
+                icon: '/icons/Icon-36.png',
+            })
+        }
     });
+
+    const handleDeleteContribution = async () => {
+        await deleteContribution(contributionId);
+    }
 
     return (
         <Box width={{ initial: "80vw", md: "60vw"}}>
             <Card className={userName === contributorName ? 'border-b-4 border-blue-500 relative py-6' : 'relative py-6'}>
                 {userName === contributorName &&
-                    <Button variant="soft" color="gray" className="hover:cursor-pointer absolute right-5" onClick={() => deleteContribution(contributionId)}>X</Button>
+                    <Button variant="soft" color="gray" className="hover:cursor-pointer absolute right-5" onClick={handleDeleteContribution}>X</Button>
                 }
                 <Flex gap="4" align="center">
                     <Avatar size="5" radius="full" className="self-start" fallback={contributorName ? contributorName.charAt(0).toUpperCase() : "GS"} color="indigo" />

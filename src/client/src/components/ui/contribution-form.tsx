@@ -30,7 +30,18 @@ const ContributionForm: React.FC<ContributionFormProps> = ({ setOpenModal }) => 
             await queryClient.invalidateQueries({
                 queryKey: contributionsKeys.contributions,
             });
+            new Notification('Obvestilo', {
+                body: 'Prispevek je bil uspešno objavljen.',
+                icon: '/icons/Icon-36.png',
+            })
         },
+        onError: (error) => {
+            console.error(error);
+            new Notification('Opozorilo', {
+                body: 'Napaka pri objavljanju prispevka.',
+                icon: '/icons/Icon-36.png',
+            })
+        }
     });
 
 
