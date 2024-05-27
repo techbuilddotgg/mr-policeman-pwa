@@ -19,7 +19,7 @@ export default function ArticlesPage() {
     };
 
   return (
-      <Container size="1" className="mx-24 my-12" align="left">
+      <Container size="1" className="mx-8 md:mx-24 my-12" align="left">
           <Badge color="blue" className="mb-2">Ne spreglej</Badge>
           <Heading className="mb-4">Koristne povezave</Heading>
           <Flex gap="1" direction="column" className="mb-12">

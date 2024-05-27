@@ -8,7 +8,7 @@ interface LinkCardProps {
 
 const LinkCard: React.FC<LinkCardProps> = ({ name, link }) => {
     return (
-        <Box width="80vw">
+        <Box width={{ initial: "80vw", md: "50vw"}}>
             <Card asChild>
                 <a href={link} target="_blank" rel="noopener noreferrer">
                     <Text as="div" size="2" weight="bold">

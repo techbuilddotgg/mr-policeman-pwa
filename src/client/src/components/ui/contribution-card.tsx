@@ -25,15 +25,15 @@ const ContributionCard: React.FC<ContributionCardProps> = ({ contributionId, con
     });
 
     return (
-        <Box width="60vw">
-            <Card size="3" className={userName === contributorName ? 'border-b-4 border-blue-500 relative' : 'relative'}>
+        <Box width={{ initial: "80vw", md: "60vw"}}>
+            <Card className={userName === contributorName ? 'border-b-4 border-blue-500 relative py-6' : 'relative py-6'}>
                 {userName === contributorName &&
                     <Button variant="soft" color="gray" className="hover:cursor-pointer absolute right-5" onClick={() => deleteContribution(contributionId)}>X</Button>
                 }
                 <Flex gap="4" align="center">
-                    <Avatar size="5" radius="full" fallback={contributorName ? contributorName.charAt(0).toUpperCase() : "GS"} color="indigo" />
+                    <Avatar size="5" radius="full" className="self-start" fallback={contributorName ? contributorName.charAt(0).toUpperCase() : "GS"} color="indigo" />
                     <Box>
-                        <Text as="div" size="4" weight="bold" color="gray" className="mb-2">
+                        <Text weight="bold" color="gray" className="mb-2 block mr-12 sm:mr-20">
                             {contribution}
                         </Text>
                         <Text as="div" size="3" color="gray" weight="light">
