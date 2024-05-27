@@ -6,6 +6,7 @@ import isAuthenticated from '../../common/middlewares/authentication.middleware'
 import validate from '../../common/middlewares/validation.middleware';
 import { createControlSchema } from './create-control.schema';
 import { idSchema } from '../../common/validators/common.validators';
+import passport from 'passport';
 
 export class ControlsRouter extends ModuleRouter {
   public readonly prefix = '/controls';
@@ -55,7 +56,7 @@ export class ControlsRouter extends ModuleRouter {
      */
     this.router.post(
       '/',
-      // isAuthenticated,
+      passport.authenticate('jwt'),
       validate(createControlSchema),
       this.controller.createControl.bind(this.controller)
     );
@@ -74,7 +75,7 @@ export class ControlsRouter extends ModuleRouter {
      */
     this.router.get(
       '/',
-      // isAuthenticated,
+      passport.authenticate('jwt'),
       this.controller.getControls.bind(this.controller)
     );
 
@@ -102,7 +103,7 @@ export class ControlsRouter extends ModuleRouter {
      */
     this.router.get(
       '/:id',
-      // isAuthenticated,
+      passport.authenticate('jwt'),
       validate(idSchema),
       this.controller.getControlById.bind(this.controller)
     );
@@ -128,7 +129,7 @@ export class ControlsRouter extends ModuleRouter {
      */
     this.router.delete(
       '/:id',
-      isAuthenticated,
+      passport.authenticate('jwt'),
       validate(idSchema),
       this.controller.deleteControl.bind(this.controller)
     );
