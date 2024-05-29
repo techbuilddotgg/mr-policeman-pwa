@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { Button } from "@radix-ui/themes";
 
 interface MicrophoneProps {
-  speakText: string;
+  speakText?: string;
 }
 
 const Microphone: React.FC<MicrophoneProps> = ({ speakText }) => {
@@ -14,7 +14,7 @@ const Microphone: React.FC<MicrophoneProps> = ({ speakText }) => {
   const commands: { [key: string]: () => void } = {
     'promet v živo': () => { window.open('https://www.promet.si/sl', '_blank'); },
     'stanje na slovenskih cestah': () => { window.open('https://www.amzs.si/na-poti/stanje-na-slovenskih-cestah', '_blank'); },
-    'preberi današnje prispevke': () => { speak(speakText); },
+    'preberi današnje prispevke': () => { speak(speakText || ''); },
   };
 
   const startRecording = () => {

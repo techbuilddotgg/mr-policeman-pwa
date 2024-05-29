@@ -8,6 +8,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import {contributionsKeys} from "@/lib/api/key-factories";
 import {useContributionsMutation} from "@/lib/hooks/contributions";
 import {useProfile} from "@/lib/hooks/users";
+import { findAndFilter } from 'swearify';
 
 interface ContributionFormProps {
     setOpenModal: (open: boolean) => void;
@@ -46,8 +47,10 @@ const ContributionForm: React.FC<ContributionFormProps> = ({ setOpenModal }) => 
 
 
     const onSubmit = (data: PublishContribution) => {
+        const result= findAndFilter(data.text, '*', ['sl', 'en'], [], []);
+
         if(profile?.id)
-            publishContribution({...data, userId: profile?.id});
+            publishContribution({...data, text: result?.filtered_sentense ?? data.text, userId: profile?.id});
             setOpenModal(false);
     };
 
