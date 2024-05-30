@@ -13,6 +13,7 @@ export enum Provider {
   Email = 'email',
   Google = 'google',
 }
+
 export const providerEnum = pgEnum('provider', [
   Provider.Email,
   Provider.Google,
@@ -48,7 +49,7 @@ export const contributions = pgTable('contributions', {
     .notNull()
     .references(() => users.id),
   text: varchar('description').notNull(),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
 });
 
 export const controls = pgTable('controls', {
@@ -59,5 +60,5 @@ export const controls = pgTable('controls', {
   description: varchar('description'),
   upVotes: integer('up_votes').default(0).notNull(),
   downVotes: integer('down_votes').default(0).notNull(),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
 });

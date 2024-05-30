@@ -1,0 +1,2 @@
+ALTER TABLE "contributions" ALTER COLUMN "created_at" SET DATA TYPE timestamp with time zone;--> statement-breakpoint
+ALTER TABLE "controls" ALTER COLUMN "created_at" SET DATA TYPE timestamp with time zone;
