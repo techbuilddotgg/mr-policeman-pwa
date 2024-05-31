@@ -1,6 +1,6 @@
 'use client';
-import React, { ReactNode, useEffect, useState } from 'react';
-import Map from 'react-map-gl';
+import React, { ReactNode, useState } from 'react';
+import Map, { GeolocateControl } from 'react-map-gl';
 import AdvancedMarker from '@/components/ui/advanced-marker';
 import Modal from '@/components/ui/modal';
 import ControlForm from '@/components/ui/control-form';
@@ -8,10 +8,11 @@ import mapboxgl from 'mapbox-gl';
 import { useControls } from '@/lib/hooks/control';
 import { Control } from '@/lib/types/control-types';
 import ControlInformation from '@/components/ui/control-information';
-import { getUserGeoLocation } from '@/lib/utils';
 import { useRadars } from '@/lib/hooks/radars';
 import { Radar } from '@/lib/types/radar-types';
 import RadarInformation from '@/components/ui/radar-information';
+import { useUserGeoLocation } from '@/lib/hooks/location';
+import { haversineDistanceBetweenPoints } from '@/lib/utils';
 
 const defaultCoordinatesValue = {
   latitude: 0,
@@ -30,8 +31,8 @@ export default function Home() {
   const [coordinates, setCoordinates] = useState(defaultCoordinatesValue);
   const [content, setContent] = useState(ModalContent.CONTRIBUTION_FORM);
   const [selectedControl, setSelectedControl] = useState<Control | null>(null);
-  const [userLocation, setUserLocation] = useState<GeolocationCoordinates | null>(null);
   const [selectedRadar, setSelectedRadar] = useState<Radar>({} as Radar);
+  const { location: userLocation } = useUserGeoLocation();
 
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -63,17 +64,6 @@ export default function Home() {
     handleOpenModal();
   };
 
-  useEffect(() => {
-    getUserGeoLocation()
-      .then((position) => {
-        setUserLocation(position.coords);
-      })
-      .catch((err) => {
-        setUserLocation(null);
-        console.error(err);
-      });
-  }, []);
-
   const { data: radars } = useRadars();
 
   const getModalContent = (content: ModalContent): ReactNode => {
@@ -89,6 +79,24 @@ export default function Home() {
     }
   };
 
+  const onPositionChange = (position: GeolocationPosition) => {
+    controls?.forEach((control) => {
+      const distance = haversineDistanceBetweenPoints(
+        {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        },
+        {
+          latitude: control.latitude,
+          longitude: control.longitude,
+        },
+      );
+      if (distance < 500) {
+        new Notification('Kontrola prometa v bližini');
+      }
+    });
+  };
+
   return (
     <div className="w-full">
       <Modal isOpen={isModalOpen} onClose={handleCloseModal} children={getModalContent(content)} />
@@ -100,10 +108,18 @@ export default function Home() {
           latitude: userLocation?.latitude || 46.0569,
           zoom: 14,
         }}
+        longitude={userLocation?.longitude || 15.6361}
+        latitude={userLocation?.latitude || 46.0569}
         style={{ height: '100vh' }}
         mapStyle="mapbox://styles/mapbox/streets-v9"
         onClick={(e) => handleMapClick(e)}
       >
+        <GeolocateControl
+          positionOptions={{ enableHighAccuracy: true }}
+          trackUserLocation
+          showUserLocation
+          onGeolocate={onPositionChange}
+        />
         {!isLoading &&
           controls?.map((control) => (
             <AdvancedMarker<Control>

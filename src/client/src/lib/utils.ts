@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import {Contribution} from "@/lib/types/contributions-types";
+import { Contribution } from '@/lib/types/contributions-types';
+import { GeoLocation } from '@/lib/types/common';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -64,14 +65,25 @@ export const getUserGeoLocation = async (): Promise<GeolocationPosition> => {
   });
 };
 
-export const getContributionsTextOfToday = (contributions: Contribution[]): string => {
-    const today = new Date().toISOString().split('T')[0];
-    const contributionsString =  contributions
-        .filter((contribution) => contribution.createdAt.split('T')[0] === today)
-        .map((contribution) => contribution.text)
-        .join(' ');
-    if(contributionsString.length === 0)
-        return 'Danes še ni novih prispevkov.';
+export function haversineDistanceBetweenPoints(location1: GeoLocation, location2: GeoLocation) {
+  const R = 6371e3;
+  const p1 = (location1.latitude * Math.PI) / 180;
+  const p2 = (location2.latitude * Math.PI) / 180;
+  const deltaLon = location2.longitude - location1.longitude;
+  const deltaLambda = (deltaLon * Math.PI) / 180;
+  const d =
+    Math.acos(Math.sin(p1) * Math.sin(p2) + Math.cos(p1) * Math.cos(p2) * Math.cos(deltaLambda)) *
+    R;
+  return d;
+}
 
-    return 'Novi prispevki na današnji dan so...' + contributionsString
+export const getContributionsTextOfToday = (contributions: Contribution[]): string => {
+  const today = new Date().toISOString().split('T')[0];
+  const contributionsString = contributions
+    .filter((contribution) => contribution.createdAt.split('T')[0] === today)
+    .map((contribution) => contribution.text)
+    .join(' ');
+  if (contributionsString.length === 0) return 'Danes še ni novih prispevkov.';
+
+  return 'Novi prispevki na današnji dan so...' + contributionsString;
 };
