@@ -8,6 +8,9 @@ import { useQueryClient } from '@tanstack/react-query';
 import {contributionsKeys} from "@/lib/api/key-factories";
 import {useContributionsMutation} from "@/lib/hooks/contributions";
 import {useProfile} from "@/lib/hooks/users";
+import { findAndFilter } from 'swearify';
+import { AddContributionSchema } from '@/lib/validators/contribution.schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 interface ContributionFormProps {
     setOpenModal: (open: boolean) => void;
@@ -18,7 +21,8 @@ const ContributionForm: React.FC<ContributionFormProps> = ({ setOpenModal }) => 
 
     const { data: profile, isLoading: isLoadingProfile } = useProfile();
 
-    const { handleSubmit, register, setValue, formState, resetField } = useForm<PublishContribution>({
+    const { handleSubmit, register, formState } = useForm<PublishContribution>({
+        resolver: zodResolver(AddContributionSchema),
         defaultValues: {
             userId: profile?.id || '',
             text: '',
@@ -30,13 +34,26 @@ const ContributionForm: React.FC<ContributionFormProps> = ({ setOpenModal }) => 
             await queryClient.invalidateQueries({
                 queryKey: contributionsKeys.contributions,
             });
+            new Notification('Obvestilo', {
+                body: 'Prispevek je bil uspešno objavljen.',
+                icon: '/icons/Icon-36.png',
+            })
         },
+        onError: (error) => {
+            console.error(error);
+            new Notification('Opozorilo', {
+                body: 'Napaka pri objavljanju prispevka.',
+                icon: '/icons/Icon-36.png',
+            })
+        }
     });
 
 
     const onSubmit = (data: PublishContribution) => {
+        const result= findAndFilter(data.text, '*', ['sl', 'en'], [], []);
+
         if(profile?.id)
-            publishContribution({...data, userId: profile?.id});
+            publishContribution({...data, text: result?.filtered_sentense ?? data.text, userId: profile?.id});
             setOpenModal(false);
     };
 
@@ -55,8 +72,10 @@ const ContributionForm: React.FC<ContributionFormProps> = ({ setOpenModal }) => 
                         <TextArea
                             placeholder="Tukaj vnesite..."
                             {...register('text')}
-                            required={true}
                         />
+                        <Text size="1" color="gray" mt="1">
+                            {formState.errors.text ? formState.errors.text.message : ''}
+                        </Text>
                     </label>
                 </Flex>
 

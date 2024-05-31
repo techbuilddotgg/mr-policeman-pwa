@@ -1,5 +1,5 @@
 import {MutationOptions, useMutation, useQuery} from "@tanstack/react-query";
-import {createContribution, getContributions} from "@/lib/api/contributions-service";
+import {createContribution, deleteContribution, getContributions} from "@/lib/api/contributions-service";
 import {contributionsKeys} from "@/lib/api/key-factories";
 import {PublishContribution} from "@/lib/types/contributions-types";
 
@@ -17,4 +17,13 @@ export const useContributionsMutation = (
         ...options,
         mutationKey: contributionsKeys.createContribution(),
         mutationFn: createContribution,
+    });
+
+export const useDeleteContributionMutation = (
+    options?: Omit<MutationOptions<string, unknown, string>, 'mutationKey' | 'mutationFn'>,
+) =>
+    useMutation({
+        ...options,
+        mutationKey: contributionsKeys.deleteContribution(),
+        mutationFn: deleteContribution,
     });

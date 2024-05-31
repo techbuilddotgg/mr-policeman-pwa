@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import {Contribution} from "@/lib/types/contributions-types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -61,4 +62,16 @@ export const getUserGeoLocation = async (): Promise<GeolocationPosition> => {
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject);
   });
+};
+
+export const getContributionsTextOfToday = (contributions: Contribution[]): string => {
+    const today = new Date().toISOString().split('T')[0];
+    const contributionsString =  contributions
+        .filter((contribution) => contribution.createdAt.split('T')[0] === today)
+        .map((contribution) => contribution.text)
+        .join(' ');
+    if(contributionsString.length === 0)
+        return 'Danes še ni novih prispevkov.';
+
+    return 'Novi prispevki na današnji dan so...' + contributionsString
 };

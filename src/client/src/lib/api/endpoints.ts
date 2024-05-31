@@ -3,4 +3,5 @@ export enum Endpoints {
   USERS = '/users',
   CONTRIBUTIONS = '/contributions',
   CONTROLS = '/controls',
+  RADARS = '/radars',
 }

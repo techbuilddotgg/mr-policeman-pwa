@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import Map from 'react-map-gl';
 import AdvancedMarker from '@/components/ui/advanced-marker';
 import Modal from '@/components/ui/modal';
@@ -9,6 +9,9 @@ import { useControls } from '@/lib/hooks/control';
 import { Control } from '@/lib/types/control-types';
 import ControlInformation from '@/components/ui/control-information';
 import { getUserGeoLocation } from '@/lib/utils';
+import { useRadars } from '@/lib/hooks/radars';
+import { Radar } from '@/lib/types/radar-types';
+import RadarInformation from '@/components/ui/radar-information';
 
 const defaultCoordinatesValue = {
   latitude: 0,
@@ -16,17 +19,19 @@ const defaultCoordinatesValue = {
 };
 
 enum ModalContent {
-  Form = 'form',
-  Info = 'info',
+  CONTRIBUTION_FORM = 'form',
+  CONTRIBUTION_INFO = 'info',
+  RADAR_INFO = 'radar',
 }
 
 export default function Home() {
   const { data: controls, isLoading } = useControls();
   const [isModalOpen, setModalOpen] = useState(false);
   const [coordinates, setCoordinates] = useState(defaultCoordinatesValue);
-  const [content, setContent] = useState(ModalContent.Form);
+  const [content, setContent] = useState(ModalContent.CONTRIBUTION_FORM);
   const [selectedControl, setSelectedControl] = useState<Control | null>(null);
   const [userLocation, setUserLocation] = useState<GeolocationCoordinates | null>(null);
+  const [selectedRadar, setSelectedRadar] = useState<Radar>({} as Radar);
 
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -38,7 +43,13 @@ export default function Home() {
 
   const handleMarkerClick = (control: Control) => {
     setSelectedControl(control);
-    setContent(ModalContent.Info);
+    setContent(ModalContent.CONTRIBUTION_INFO);
+    handleOpenModal();
+  };
+
+  const handleRadarClick = (radar: Radar) => {
+    setSelectedRadar(radar);
+    setContent(ModalContent.RADAR_INFO);
     handleOpenModal();
   };
 
@@ -48,7 +59,7 @@ export default function Home() {
       longitude: e.lngLat.lng,
     });
 
-    setContent(ModalContent.Form);
+    setContent(ModalContent.CONTRIBUTION_FORM);
     handleOpenModal();
   };
 
@@ -63,19 +74,24 @@ export default function Home() {
       });
   }, []);
 
+  const { data: radars } = useRadars();
+
+  const getModalContent = (content: ModalContent): ReactNode => {
+    switch (content) {
+      case ModalContent.CONTRIBUTION_FORM:
+        return <ControlForm latitude={coordinates.latitude} longitude={coordinates.longitude} />;
+      case ModalContent.CONTRIBUTION_INFO:
+        return <ControlInformation control={selectedControl} />;
+      case ModalContent.RADAR_INFO:
+        return <RadarInformation radar={selectedRadar} />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="w-full">
-      <Modal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        children={
-          content === ModalContent.Form ? (
-            <ControlForm latitude={coordinates.latitude} longitude={coordinates.longitude} />
-          ) : content === ModalContent.Info ? (
-            <ControlInformation control={selectedControl} />
-          ) : null
-        }
-      />
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal} children={getModalContent(content)} />
       <Map
         reuseMaps
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
@@ -90,7 +106,7 @@ export default function Home() {
       >
         {!isLoading &&
           controls?.map((control) => (
-            <AdvancedMarker
+            <AdvancedMarker<Control>
               key={control.id}
               longitude={control.longitude}
               latitude={control.latitude}
@@ -98,6 +114,15 @@ export default function Home() {
               onClick={handleMarkerClick}
             />
           ))}
+        {radars?.map((radar) => (
+          <AdvancedMarker<Radar>
+            key={radar.id}
+            longitude={radar.longitude}
+            latitude={radar.latitude}
+            data={radar}
+            onClick={handleRadarClick}
+          />
+        ))}
       </Map>
     </div>
   );
