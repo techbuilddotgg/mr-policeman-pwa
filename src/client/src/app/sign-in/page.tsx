@@ -89,7 +89,7 @@ export default function SignInPage() {
         </div>
         <div className="flex w-full flex-col gap-2">
           <Button variant="outline" type="button" onClick={() => router.push(`/sign-up`)}>
-            <p className="ml-2">Prijava z obstoječim računom</p>
+            <p className="ml-2">Ustvarite nov račun</p>
           </Button>
           <GoogleSignInButton />
         </div>
