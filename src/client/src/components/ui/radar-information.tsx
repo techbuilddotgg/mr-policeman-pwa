@@ -31,7 +31,7 @@ const RadarInformation = ({ radar }: RadarInformationProps) => {
       <DialogBody className={'mt-3'}>Speed limit: {radar.speedLimit}</DialogBody>
       <DialogFooter className={'mt-5'}>
         <DialogClose asChild>
-          <Button variant="ghost">Close</Button>
+          <Button variant="ghost">Zapri</Button>
         </DialogClose>
       </DialogFooter>
     </>

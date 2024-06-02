@@ -46,25 +46,23 @@ const ControlForm: FC<ControlFormProps> = ({ latitude, longitude }) => {
   return (
     <>
       <DialogHeader>
-        <DialogTitle>Add New Police Control</DialogTitle>
-        <DialogDescription>
-          Enter the details of the new police control point below.
-        </DialogDescription>
+        <DialogTitle>Dodaj novo policijsko kontrolo</DialogTitle>
+        <DialogDescription>Vnesi podatke o novi policijski kontroli.</DialogDescription>
       </DialogHeader>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Label htmlFor="name">Name</Label>
+        <Label htmlFor="name">Ime kontolne točke</Label>
         <Input
           {...register('name')}
-          placeholder="Control point name"
+          placeholder="Ime"
           type="text"
           autoCapitalize="none"
           autoCorrect="off"
           autoComplete="off"
         />
-        <Label htmlFor="description">Description</Label>
+        <Label htmlFor="description">Opis kontrolne točke</Label>
         <Input
           {...register('description')}
-          placeholder="Control point description"
+          placeholder="Opis"
           type="text"
           autoCapitalize="none"
           autoCorrect="off"
@@ -72,7 +70,7 @@ const ControlForm: FC<ControlFormProps> = ({ latitude, longitude }) => {
         />
         <DialogFooter className={'mt-5'}>
           <DialogClose asChild>
-            <Button type="submit">Save changes</Button>
+            <Button type="submit">Shrani</Button>
           </DialogClose>
         </DialogFooter>
       </form>
