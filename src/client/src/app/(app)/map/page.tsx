@@ -33,6 +33,7 @@ export default function Home() {
   const [selectedControl, setSelectedControl] = useState<Control | null>(null);
   const [selectedRadar, setSelectedRadar] = useState<Radar>({} as Radar);
   const { location: userLocation } = useUserGeoLocation();
+  const { data: radars } = useRadars();
 
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -63,8 +64,6 @@ export default function Home() {
     setContent(ModalContent.CONTRIBUTION_FORM);
     handleOpenModal();
   };
-
-  const { data: radars } = useRadars();
 
   const getModalContent = (content: ModalContent): ReactNode => {
     switch (content) {
@@ -106,10 +105,8 @@ export default function Home() {
         initialViewState={{
           longitude: userLocation?.longitude || 15.6361,
           latitude: userLocation?.latitude || 46.0569,
-          zoom: 14,
+          zoom: 9,
         }}
-        longitude={userLocation?.longitude || 15.6361}
-        latitude={userLocation?.latitude || 46.0569}
         style={{ height: '100vh' }}
         mapStyle="mapbox://styles/mapbox/streets-v9"
         onClick={(e) => handleMapClick(e)}

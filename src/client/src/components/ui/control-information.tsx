@@ -33,7 +33,7 @@ const ControlInformation: FC<ControlInformationProps> = ({ control }) => {
       <DialogBody className={'mt-3'}>{control?.description}</DialogBody>
       <DialogFooter className={'mt-5'}>
         <DialogClose asChild>
-          <Button variant="ghost">Close</Button>
+          <Button variant="ghost">Zapri</Button>
         </DialogClose>
       </DialogFooter>
     </>
