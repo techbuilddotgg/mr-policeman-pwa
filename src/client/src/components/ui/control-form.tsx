@@ -40,6 +40,12 @@ const ControlForm: FC<ControlFormProps> = ({ latitude, longitude }) => {
   });
 
   const onSubmit = async (data: Control) => {
+    if (!navigator.onLine) {
+      await queryClient.setQueryData(controlKeys.controls, (controls: Control[]) => [
+        ...controls,
+        data,
+      ]);
+    }
     await createControl(data);
   };
 
