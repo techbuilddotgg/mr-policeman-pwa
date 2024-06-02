@@ -18,17 +18,17 @@ export default function NavigationBar() {
       <TabsList className="flex h-full w-full flex-col sm:flex-row">
         <Link href="/map" className="h-full w-full p-0.5">
           <TabsTrigger className="h-full w-full" value="map">
-            Map
+            Zemljevid
           </TabsTrigger>
         </Link>
         <Link href="/articles" className="h-full w-full p-0.5">
           <TabsTrigger className="h-full w-full" value="articles">
-            Articles
+            Prispevki
           </TabsTrigger>
         </Link>
         <Link href="/profile" className="h-full w-full p-0.5">
           <TabsTrigger className="h-full w-full" value="profile">
-            Profile
+            Profil
           </TabsTrigger>
         </Link>
       </TabsList>
