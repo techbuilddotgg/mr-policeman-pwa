@@ -14,6 +14,7 @@ const settings = {
   googleCallbackUrl: env.get('GOOGLE_CALLBACK_URL').required().asString(),
   clientUrl: env.get('CLIENT_URL').required().asString(),
   jwtSecret: env.get('JWT_SECRET').required().asString(),
+  radarApiEndpoint: env.get('RADAR_API_ENDPOINT').required().asString(),
 };
 
 export default settings;

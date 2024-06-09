@@ -2,7 +2,6 @@ import { ControlsController } from './controls.controller';
 import { Router } from 'express';
 import { ControlsService } from '../../services/controls.service';
 import { ModuleRouter } from '../../common/router/module-router.class';
-import isAuthenticated from '../../common/middlewares/authentication.middleware';
 import validate from '../../common/middlewares/validation.middleware';
 import { createControlSchema } from './create-control.schema';
 import { idSchema } from '../../common/validators/common.validators';
@@ -56,7 +55,7 @@ export class ControlsRouter extends ModuleRouter {
      */
     this.router.post(
       '/',
-      passport.authenticate('jwt'),
+      // passport.authenticate('jwt'),
       validate(createControlSchema),
       this.controller.createControl.bind(this.controller)
     );
@@ -75,7 +74,7 @@ export class ControlsRouter extends ModuleRouter {
      */
     this.router.get(
       '/',
-      passport.authenticate('jwt'),
+      //passport.authenticate('jwt'),
       this.controller.getControls.bind(this.controller)
     );
 
@@ -103,7 +102,7 @@ export class ControlsRouter extends ModuleRouter {
      */
     this.router.get(
       '/:id',
-      passport.authenticate('jwt'),
+      // passport.authenticate('jwt'),
       validate(idSchema),
       this.controller.getControlById.bind(this.controller)
     );
@@ -129,9 +128,62 @@ export class ControlsRouter extends ModuleRouter {
      */
     this.router.delete(
       '/:id',
-      passport.authenticate('jwt'),
+      //  passport.authenticate('jwt'),
       validate(idSchema),
       this.controller.deleteControl.bind(this.controller)
+    );
+
+    /**
+     * @swagger
+     * /controls/{id}/upvote:
+     *   put:
+     *     summary: Upvote a control
+     *     tags: [Controls]
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         schema:
+     *           type: string
+     *         required: true
+     *         description: Control ID
+     *     responses:
+     *       200:
+     *         description: Control upvoted successfully
+     *       500:
+     *         description: Internal Server Error
+     */
+    this.router.put(
+      '/:id/upvote',
+      //   passport.authenticate('jwt'),
+      validate(idSchema),
+      this.controller.upVoteControl.bind(this.controller)
+    );
+
+    /**
+     * @swagger
+     * /controls/{id}/downvote:
+     *   put:
+     *     summary: Downvote a control
+     *     tags: [Controls]
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         schema:
+     *           type: string
+     *         required: true
+     *         description: Control ID
+     *     responses:
+     *       200:
+     *         description: Control downvoted successfully
+     *       500:
+     *         description: Internal Server Error
+     */
+
+    this.router.put(
+      '/:id/downvote',
+      //  passport.authenticate('jwt'),
+      validate(idSchema),
+      this.controller.downVoteControl.bind(this.controller)
     );
 
     return this.router;

@@ -92,6 +92,21 @@ export class RadarRouter extends ModuleRouter {
      */
     this.router.get('/', this.controller.getRadars.bind(this.controller));
 
+    /**
+     * @swagger
+     * /radars/download:
+     *   post:
+     *     summary: Download radars from external API
+     *     tags: [Radars]
+     *     responses:
+     *       200:
+     *         description: Radars downloaded
+     */
+    this.router.post(
+      '/download',
+      this.controller.downloadRadars.bind(this.controller)
+    );
+
     return this.router;
   }
 }

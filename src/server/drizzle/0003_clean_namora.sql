@@ -1,0 +1,1 @@
+ALTER TABLE "radars" ADD COLUMN "description" varchar;

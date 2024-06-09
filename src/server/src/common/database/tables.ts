@@ -24,6 +24,7 @@ export const radars = pgTable('radars', {
   latitude: decimal('latitude').notNull(),
   longitude: decimal('longitude').notNull(),
   speedLimit: integer('speed_limit').notNull(),
+  description: varchar('description'),
 });
 
 export const users = pgTable('users', {

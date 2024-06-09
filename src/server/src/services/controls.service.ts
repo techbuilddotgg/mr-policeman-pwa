@@ -26,4 +26,22 @@ export class ControlsService {
   async deleteControl(id: string) {
     await db.delete(controls).where(eq(controls.id, id)).execute();
   }
+
+  async upVoteControl(id: string) {
+    const control = await this.getControlById(id);
+    await db
+      .update(controls)
+      .set({ upVotes: control.upVotes + 1 })
+      .where(eq(controls.id, id))
+      .execute();
+  }
+
+  async downVoteControl(id: string) {
+    const control = await this.getControlById(id);
+    await db
+      .update(controls)
+      .set({ downVotes: control.downVotes + 1 })
+      .where(eq(controls.id, id))
+      .execute();
+  }
 }

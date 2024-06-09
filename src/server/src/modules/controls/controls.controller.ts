@@ -18,7 +18,7 @@ export class ControlsController {
   async getControls(req: Request, res: Response, next: NextFunction) {
     try {
       const controls = await this.controlsService.getControls();
-      console.log(controls)
+      console.log(controls);
       return res.status(200).json(controls);
     } catch (error) {
       console.error(error);
@@ -42,6 +42,30 @@ export class ControlsController {
       const id = req.params.id;
       await this.controlsService.deleteControl(id);
       return res.status(200).json({ message: 'Control deleted successfully' });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Internal Server Error' });
+    }
+  }
+
+  async upVoteControl(req: Request, res: Response, next: NextFunction) {
+    try {
+      const id = req.params.id;
+      await this.controlsService.upVoteControl(id);
+      return res.status(200).json({ message: 'Control upvoted successfully' });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Internal Server Error' });
+    }
+  }
+
+  async downVoteControl(req: Request, res: Response, next: NextFunction) {
+    try {
+      const id = req.params.id;
+      await this.controlsService.downVoteControl(id);
+      return res
+        .status(200)
+        .json({ message: 'Control downvoted successfully' });
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: 'Internal Server Error' });

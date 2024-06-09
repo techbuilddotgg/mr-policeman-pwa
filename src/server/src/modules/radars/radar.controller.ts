@@ -18,4 +18,9 @@ export class RadarController {
     const list = await this.radarService.getRadars();
     res.status(200).json(list);
   }
+
+  async downloadRadars(_req: Request, res: Response, _next: NextFunction) {
+    await this.radarService.downloadRadars();
+    res.status(200).json({ message: 'Radars downloaded' });
+  }
 }
