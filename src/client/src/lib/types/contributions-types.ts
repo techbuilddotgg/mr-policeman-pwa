@@ -9,4 +9,5 @@ export interface Contribution {
 export interface PublishContribution {
     userId: string;
     text: string;
+    priority: number
 }
