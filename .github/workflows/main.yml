@@ -35,8 +35,12 @@ jobs:
         with:
           node-version: 20.x
 
-      - name: Install Dependencies
-        run: npm install
+      - name: Navigate to Server Directory and Install Dependencies
+        run: |
+          cd src/server
+          npm install
 
       - name: Run Unit Tests
-        run: npx vitest
+        run: |
+          cd src/server
+          npx vitest
