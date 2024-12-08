@@ -13,10 +13,11 @@
   },
   "include": [
     "src/**/*",
-    "@types/index.d.ts"
+    "@types/index.d.ts",
+    "node_modules/@types/jest/index.d.ts"
   ],
   "exclude": [
     "node_modules",
     "dist"
-  ],
+  ]
 }
